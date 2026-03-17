@@ -326,10 +326,13 @@ function loadSettings() {
     .then(function(rows) {
       if (!Array.isArray(rows)) return;
       for (var i = 0; i < rows.length; i++) {
-        if (rows[i].key === "close_inscriptions")   closeInscriptions   = rows[i].value || null;
+        if (rows[i].key === "close_inscriptions")    closeInscriptions    = rows[i].value || null;
         if (rows[i].key === "close_desinscriptions") closeDesinscriptions = rows[i].value || null;
       }
       renderClosedBanner();
+    })
+    .catch(function() {
+      // Table settings pas encore créée — on ignore silencieusement
     });
 }
 
@@ -422,7 +425,7 @@ function renderSlots() {
       ? '<span class="badge-ado">Ados complets (3/3)</span>'
       : (adoCount > 0 ? '<span style="font-size:10px;background:#F9F8F6;color:var(--text-muted);padding:2px 7px;border-radius:10px">' + adoCount + '/3 ado' + (adoCount > 1 ? 's' : '') + '</span>' : '');
     var inscClosed = isInscriptionClosed();
-    html += '<div class="slot-card">';
+    html += '<div class="slot-card">'
       + '<div class="slot-head">'
       + '<span class="slot-time">' + sl + (adoBadge ? ' ' + adoBadge : '') + '</span>'
       + '<span class="badge ' + (full ? "badge-full" : "badge-ok") + '">' + count + '/' + smax
@@ -494,13 +497,24 @@ function getChildrenFromForm() {
 
 function resetChildrenFields(children) {
   var container = document.getElementById("childrenFields");
+  // Supprimer les lignes supplémentaires existantes
   var extras = container.querySelectorAll("[data-child]");
   for (var i = 0; i < extras.length; i++) extras[i].remove();
+  // Remplir le premier enfant
   var fc = container.querySelector(".fChild");
   var fk = container.querySelector(".fClass");
   if (fc) fc.value = (children[0] && children[0].child) || "";
   if (fk) fk.value = (children[0] && children[0].klass) || "";
+  // Recréer les lignes pour les enfants suivants
   document.getElementById("btnAddChild").style.display = "block";
+  for (var j = 1; j < Math.min(children.length, 4); j++) {
+    if (!children[j] || (!children[j].child && !children[j].klass)) continue;
+    addChildRow();
+    var allC = document.querySelectorAll(".fChild");
+    var allK = document.querySelectorAll(".fClass");
+    if (allC[j]) allC[j].value = children[j].child || "";
+    if (allK[j]) allK[j].value = children[j].klass || "";
+  }
 }
 
 /* ---- Identité ---- */
@@ -804,7 +818,8 @@ document.addEventListener("keydown", function(e) { if (e.key === "Escape") { clo
 
 // Chargement initial
 renderNav();
-Promise.all([refreshAll(), loadSettings()]);
+refreshAll();
+loadSettings();
 // Rafraîchissement automatique toutes les 30 secondes
 setInterval(refreshAll, 30000);
 setInterval(loadSettings, 60000); // Vérif dates toutes les minutes
