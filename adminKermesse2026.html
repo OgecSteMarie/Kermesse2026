@@ -139,6 +139,7 @@ tr:hover td{background:#F9F8F6}
       <button class="view-tab active" onclick="switchView('list')">Liste des inscrits</button>
       <button class="view-tab" onclick="switchView('summary')">Par stand</button>
       <button class="view-tab" onclick="switchView('resp')">Responsables</button>
+      <button class="view-tab" onclick="switchView('settings')">⚙ Paramètres</button>
     </div>
 
     <div class="section show" id="viewList">
@@ -180,6 +181,36 @@ tr:hover td{background:#F9F8F6}
         </table>
       </div>
     </div>
+
+    <!-- Vue paramètres -->
+    <div class="section" id="viewSettings">
+      <div style="max-width:520px">
+        <div style="background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-bottom:1rem">
+          <h3 style="font-family:Playfair Display,serif;font-size:16px;font-weight:600;color:var(--accent2);margin-bottom:6px">Clôture des inscriptions</h3>
+          <p style="font-size:13px;color:var(--text-soft);margin-bottom:12px">Après cette date et heure, les familles ne pourront plus s'inscrire. Laissez vide pour ne pas bloquer.</p>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <input type="datetime-local" id="closeInscDate" style="font-family:inherit;font-size:14px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;flex:1;min-width:200px"/>
+            <button onclick="saveSetting('close_inscriptions', document.getElementById('closeInscDate').value)" style="font-family:inherit;font-size:13px;padding:8px 16px;border-radius:8px;border:none;background:var(--accent2);color:white;cursor:pointer;white-space:nowrap">Enregistrer</button>
+            <button onclick="saveSetting('close_inscriptions','')" style="font-family:inherit;font-size:13px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-soft);cursor:pointer">Effacer</button>
+          </div>
+          <div id="closeInscStatus" style="font-size:12px;margin-top:8px;color:var(--text-muted)"></div>
+        </div>
+        <div style="background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-bottom:1rem">
+          <h3 style="font-family:Playfair Display,serif;font-size:16px;font-weight:600;color:var(--accent2);margin-bottom:6px">Clôture des désinscriptions</h3>
+          <p style="font-size:13px;color:var(--text-soft);margin-bottom:12px">Après cette date et heure, les familles ne pourront plus annuler. Peut être différente de la clôture des inscriptions.</p>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <input type="datetime-local" id="closeDesinscDate" style="font-family:inherit;font-size:14px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;flex:1;min-width:200px"/>
+            <button onclick="saveSetting('close_desinscriptions', document.getElementById('closeDesinscDate').value)" style="font-family:inherit;font-size:13px;padding:8px 16px;border-radius:8px;border:none;background:var(--accent2);color:white;cursor:pointer;white-space:nowrap">Enregistrer</button>
+            <button onclick="saveSetting('close_desinscriptions','')" style="font-family:inherit;font-size:13px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-soft);cursor:pointer">Effacer</button>
+          </div>
+          <div id="closeDesinscStatus" style="font-size:12px;margin-top:8px;color:var(--text-muted)"></div>
+        </div>
+        <div style="background:var(--warn-bg);border:1px solid #FFD180;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--warn)">
+          <strong>Note :</strong> les changements s'appliquent immédiatement à la page publique, sans rechargement nécessaire.
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -222,7 +253,7 @@ tr:hover td{background:#F9F8F6}
 var SUPABASE_URL = "https://rwieiemshitqcvzjzvgy.supabase.co";
 var SUPABASE_KEY = "sb_publishable_m917FPsrdzKkvYneAVg2uw_oTXKau9I";
 // ===== MOT DE PASSE ADMIN — modifiez ici =====
-var PASSWORD = "Kermesse2026";
+var PASSWORD = "kermesse2025";
 // =============================================
 
 var STANDS = [
@@ -287,6 +318,7 @@ function init() {
   document.getElementById("topbarDate").textContent = new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}) + " \u2014 donn\u00e9es en temps r\u00e9el";
   buildStandFilters();
   loadAll();
+  loadSettings();
   setInterval(loadAll, 15000); // Rafraîchissement toutes les 15s
 }
 
@@ -437,13 +469,15 @@ function deleteResp(id) {
 
 function switchView(v) {
   currentView = v;
-  var views = ["list","summary","resp"];
+  var views = ["list","summary","resp","settings"];
   document.querySelectorAll(".view-tab").forEach(function(t,i){ t.classList.toggle("active", views[i] === v); });
   document.getElementById("viewList").classList.toggle("show", v === "list");
   document.getElementById("viewSummary").classList.toggle("show", v === "summary");
   document.getElementById("viewResp").classList.toggle("show", v === "resp");
+  document.getElementById("viewSettings").classList.toggle("show", v === "settings");
   if (v === "summary") renderSummary();
   if (v === "resp") renderResp();
+  if (v === "settings") loadSettings();
 }
 
 /* ---- Ajout responsable ---- */
@@ -555,6 +589,68 @@ function dl(content, filename, type) {
   var a = document.createElement("a");
   a.href = "data:" + type + "," + encodeURIComponent(content);
   a.download = filename; a.click();
+}
+
+
+/* ---- Paramètres clôture ---- */
+function loadSettings() {
+  sbGet("settings?key=in.(close_inscriptions,close_desinscriptions)&select=key,value")
+    .then(function(rows) {
+      if (!Array.isArray(rows)) return;
+      for (var i = 0; i < rows.length; i++) {
+        var r = rows[i];
+        if (r.key === "close_inscriptions") {
+          var el = document.getElementById("closeInscDate");
+          if (el && r.value) el.value = r.value.substring(0,16);
+          updateSettingStatus("closeInscStatus", r.value, "inscriptions");
+        }
+        if (r.key === "close_desinscriptions") {
+          var el2 = document.getElementById("closeDesinscDate");
+          if (el2 && r.value) el2.value = r.value.substring(0,16);
+          updateSettingStatus("closeDesinscStatus", r.value, "désinscriptions");
+        }
+      }
+    });
+}
+
+function updateSettingStatus(elId, value, label) {
+  var el = document.getElementById(elId);
+  if (!el) return;
+  if (!value) {
+    el.textContent = "Pas de date de clôture définie — " + label + " ouvertes.";
+    el.style.color = "var(--success)";
+  } else {
+    var d = new Date(value);
+    var now = new Date();
+    var fmt = d.toLocaleString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"});
+    if (d < now) {
+      el.textContent = "Clôturé depuis le " + fmt;
+      el.style.color = "var(--full)";
+    } else {
+      el.textContent = "Clôture prévue le " + fmt;
+      el.style.color = "var(--warn)";
+    }
+  }
+}
+
+function saveSetting(key, value) {
+  var payload = {key: key, value: value || null};
+  fetch(SUPABASE_URL + "/rest/v1/settings?key=eq." + key, {
+    method: "PATCH",
+    headers: Object.assign({}, sbHeaders(), {"Prefer": "return=representation"}),
+    body: JSON.stringify({value: value || null})
+  }).then(function(r) {
+    if (r.status === 404 || r.status === 200 || r.status === 204) {
+      loadSettings();
+    }
+  }).catch(function() {
+    // Essayer un upsert
+    fetch(SUPABASE_URL + "/rest/v1/settings", {
+      method: "POST",
+      headers: Object.assign({}, sbHeaders(), {"Prefer": "resolution=merge-duplicates"}),
+      body: JSON.stringify(payload)
+    }).then(function(){ loadSettings(); });
+  });
 }
 
 function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
