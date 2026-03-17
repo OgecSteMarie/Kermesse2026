@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Kermesse Bénévoles</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F4EF;--card:#FFF;--accent:#D4553A;--accent2:#2B4A3F;--text:#1A1A1A;--text-soft:#666;--text-muted:#999;--border:#E2DDD6;--success-bg:#EAF3E8;--success:#2E7D32;--full-bg:#FDECEA;--full:#C62828;--warn-bg:#FFF8E1;--warn:#E65100;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
+.login-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:2.5rem 2rem;width:100%;max-width:360px;text-align:center}
+.login-card .lock{font-size:36px;margin-bottom:1rem}
+.login-card h1{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--accent2);margin-bottom:6px}
+.login-card p{font-size:13px;color:var(--text-muted);margin-bottom:1.5rem}
+.login-card input{width:100%;font-family:'DM Sans',sans-serif;font-size:15px;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;text-align:center;letter-spacing:.1em;margin-bottom:10px;transition:border-color .15s}
+.login-card input:focus{border-color:var(--accent2);background:white}
+.btn-login{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;border-radius:8px;border:none;background:var(--accent2);color:white;cursor:pointer;transition:opacity .15s}
+.btn-login:hover{opacity:.88}
+.login-err{font-size:12px;color:var(--full);margin-top:8px;display:none}
+.app{display:none}
+.topbar{background:var(--accent2);color:white;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.topbar-left h1{font-family:'Playfair Display',serif;font-size:20px;font-weight:600}
+.topbar-left p{font-size:12px;opacity:.7;margin-top:2px}
+.topbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn-top{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.3);background:transparent;color:white;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-top:hover{background:rgba(255,255,255,0.15)}
+.btn-top.danger{border-color:rgba(212,85,58,0.5);color:#FAB4A3}
+.btn-top.danger:hover{background:rgba(212,85,58,0.2)}
+.btn-logout{font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.6);cursor:pointer}
+.btn-logout:hover{color:white;border-color:rgba(255,255,255,0.4)}
+.live-dot{display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.stats-row{display:flex;gap:1px;background:var(--border);border-bottom:1px solid var(--border)}
+.stat-item{flex:1;background:var(--card);padding:.9rem .5rem;text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--accent2);display:block}
+.stat-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.main{max-width:1050px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem;align-items:center}
+.filter-label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-right:4px}
+.filter-chip{font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-soft);cursor:pointer;transition:all .15s}
+.filter-chip:hover{border-color:var(--accent2);color:var(--accent2)}
+.filter-chip.active{background:var(--accent2);color:white;border-color:var(--accent2)}
+.search-box{margin-left:auto}
+.search-box input{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);outline:none;width:200px;transition:border-color .15s}
+.search-box input:focus{border-color:var(--accent2)}
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card)}
+th{background:var(--accent2);color:white;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;padding:9px 12px;text-align:left;white-space:nowrap;cursor:pointer;user-select:none}
+th:hover{background:#1e3a31}
+td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#F9F8F6}
+.badge-ado{font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;background:var(--warn-bg);color:var(--warn)}
+.btn-del{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:3px 6px;border-radius:4px}
+.btn-del:hover{color:var(--full);background:var(--full-bg)}
+.empty-row td{text-align:center;color:var(--text-muted);padding:2rem;font-style:italic}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.summary-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:12px 14px}
+.summary-card h3{font-size:13px;font-weight:500;color:var(--accent2);margin-bottom:8px}
+.slot-line{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:3px 0;border-bottom:1px solid #F0EDE8;color:var(--text-soft)}
+.slot-line:last-child{border:none}
+.badge-small{font-size:10px;font-weight:500;padding:2px 8px;border-radius:10px}
+.badge-ok{background:var(--success-bg);color:var(--success)}
+.badge-full{background:var(--full-bg);color:var(--full)}
+.view-tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
+.view-tab{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-soft);cursor:pointer;transition:all .15s}
+.view-tab.active{background:var(--accent2);color:white;border-color:var(--accent2)}
+.section{display:none}.section.show{display:block}
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,26,26,0.5);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:var(--card);border-radius:var(--radius);width:100%;max-width:440px;overflow:hidden;animation:slideUp .2s ease;max-height:90vh;overflow-y:auto}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{background:var(--accent2);color:white;padding:1.1rem 1.25rem;position:sticky;top:0}
+.modal-head h2{font-family:'Playfair Display',serif;font-size:17px;font-weight:600}
+.modal-head p{font-size:13px;opacity:.75;margin-top:2px}
+.modal-body{padding:1.25rem}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:5px}
+.field input,.field select{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus{border-color:var(--accent2);background:white}
+.msg-form{font-size:12px;padding:9px 12px;border-radius:6px;display:none;margin-top:8px}
+.msg-form.error{background:var(--full-bg);color:var(--full)}
+.msg-form.warn{background:var(--warn-bg);color:var(--warn)}
+.msg-form.success{background:var(--success-bg);color:var(--success)}
+.modal-footer{display:flex;gap:8px;padding:0 1.25rem 1.25rem}
+.btn-confirm{flex:1;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;border-radius:8px;border:none;background:var(--accent2);color:white;cursor:pointer}
+.btn-confirm:hover{opacity:.88}
+.btn-cancel-modal{font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-soft);cursor:pointer}
+.btn-cancel-modal:hover{background:var(--bg)}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.confirm-box{display:none;padding:.75rem 1.25rem 1.25rem}
+.confirm-box h3{font-size:15px;font-weight:500;color:var(--accent2);margin-bottom:8px}
+.confirm-detail{font-size:13px;background:#F4F8F4;border-radius:8px;padding:10px 14px}
+.confirm-detail div{padding:3px 0;border-bottom:1px solid #E8EDE8}
+.confirm-detail div:last-child{border:none}
+@media(max-width:600px){.topbar{flex-direction:column;align-items:flex-start}.search-box input{width:140px}}
+</style>
+</head>
+<body>
+
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <div class="lock">🔒</div>
+    <h1>Espace organisateur</h1>
+    <p>Accès réservé à l'équipe d'organisation</p>
+    <input type="password" id="pwdInput" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')login()"/>
+    <button class="btn-login" onclick="login()">Accéder</button>
+    <div class="login-err" id="loginErr">Mot de passe incorrect</div>
+  </div>
+</div>
+
+<div class="app" id="appWrap">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1>Administration — Bénévoles Kermesse</h1>
+      <p><span class="live-dot"></span><span id="topbarDate">Données en temps réel</span></p>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-top" onclick="openAddResp()">+ Responsable</button>
+      <button class="btn-top" onclick="exportCSV()">⬇ CSV</button>
+      <button class="btn-top" onclick="exportTxt()">⬇ Texte</button>
+      <button class="btn-top danger" onclick="resetAll()">Tout effacer</button>
+      <button class="btn-logout" onclick="logout()">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item"><span class="stat-num" id="statTotal">—</span><span class="stat-lbl">Inscrits</span></div>
+    <div class="stat-item"><span class="stat-num" id="statFull">—</span><span class="stat-lbl">Créneaux complets</span></div>
+    <div class="stat-item"><span class="stat-num" id="statLeft">—</span><span class="stat-lbl">Places restantes</span></div>
+    <div class="stat-item"><span class="stat-num" id="statResp">—</span><span class="stat-lbl">Responsables</span></div>
+  </div>
+
+  <div class="main">
+    <div class="view-tabs">
+      <button class="view-tab active" onclick="switchView('list')">Liste des inscrits</button>
+      <button class="view-tab" onclick="switchView('summary')">Par stand</button>
+      <button class="view-tab" onclick="switchView('resp')">Responsables</button>
+    </div>
+
+    <div class="section show" id="viewList">
+      <div class="filters">
+        <span class="filter-label">Filtrer :</span>
+        <button class="filter-chip active" onclick="setFilter('all',this)">Tous</button>
+        <div id="standFilters"></div>
+        <div class="search-box"><input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderTable()"/></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th onclick="sortBy('stand_name')">Stand</th>
+            <th onclick="sortBy('slot')">Créneau</th>
+            <th onclick="sortBy('name')">Bénévole</th>
+            <th>Ado</th>
+            <th>Enfant(s)</th>
+            <th>Téléphone</th>
+            <th>E-mail</th>
+            <th>Code</th>
+            <th>Inscrit le</th>
+            <th></th>
+          </tr></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="viewSummary">
+      <div class="summary-grid" id="summaryGrid"></div>
+    </div>
+
+    <div class="section" id="viewResp">
+      <div style="margin-bottom:1rem;font-size:13px;color:var(--text-soft)">Responsables de stand enregistrés — hors quota bénévoles.</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Stand</th><th>Responsable</th><th>Téléphone</th><th>E-mail</th><th>Enregistré le</th><th></th></tr></thead>
+          <tbody id="respTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal ajout responsable -->
+<div class="overlay" id="overlayAddResp">
+  <div class="modal">
+    <div class="modal-head" style="background:var(--accent)">
+      <h2>Ajouter un responsable</h2>
+      <p>Hors quota bénévoles — tous les créneaux du stand</p>
+    </div>
+    <div id="addRespForm">
+      <div class="modal-body">
+        <div class="field"><label>Nom et prénom *</label><input id="arName" placeholder="Jean Dupont"/></div>
+        <div class="field"><label>Téléphone *</label><input id="arPhone" type="tel" placeholder="06 12 34 56 78"/></div>
+        <div class="field"><label>E-mail *</label><input id="arEmail" type="email" placeholder="jean@email.com"/></div>
+        <div class="field">
+          <label>Stand *</label>
+          <select id="arStand"><option value="">— Choisissez un stand —</option></select>
+        </div>
+        <div class="msg-form error" id="arErr"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel-modal" onclick="closeAddResp()">Annuler</button>
+        <button class="btn-confirm" id="btnAddResp" onclick="submitAddResp()">Enregistrer</button>
+      </div>
+    </div>
+    <div class="confirm-box" id="addRespConfirm">
+      <div style="font-size:28px;text-align:center;margin-bottom:10px">✅</div>
+      <h3>Responsable enregistré !</h3>
+      <div class="confirm-detail" id="arConfirmDetail"></div>
+      <div class="modal-footer" style="padding:1rem 0 0">
+        <button class="btn-cancel-modal" onclick="closeAddResp()">Fermer</button>
+        <button class="btn-confirm" onclick="resetAddResp()">+ Ajouter un autre</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var SUPABASE_URL = "https://rwieiemshitqcvzjzvgy.supabase.co";
+var SUPABASE_KEY = "sb_publishable_m917FPsrdzKkvYneAVg2uw_oTXKau9I";
+// ===== MOT DE PASSE ADMIN — modifiez ici =====
+var PASSWORD = "Kermesse2026";
+// =============================================
+
+var STANDS = [
+  {id:"defile",    name:"D\u00e9fil\u00e9",                          slots:["14h\u201315h"],                                                    max:15},
+  {id:"bar",       name:"Bar",                                        slots:["16h\u201317h","17h\u201318h","18h\u201319h","19h\u201320h"],        max:4},
+  {id:"laser",     name:"Tir laser biathlon",                         slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"piscine",   name:"Piscine \u00e0 balles (1-4 ans)",            slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"playpark",  name:"Gonflable Playpark XXL (Petits)",            slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"comics",    name:"Gonflable Comics Run (Grands)",              slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"velo",      name:"Parcours v\u00e9los de l\u2019\u00e9cole",   slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"jeuxbois",  name:"Jeux en bois / Grenouille",                  slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"bungee",    name:"Bungee Trampoline",                          slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"arc",       name:"Tir \u00e0 l\u2019arc",                      slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"chamboule", name:"Chamboule Tout",                             slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"peche",     name:"P\u00eache \u00e0 la ligne",                 slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"maquillage",name:"Maquillage",                                 slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"confiserie",name:"Confiserie",                                 slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"repas",     name:"Repas",                                      slots:["19h\u201320h"],                                                    max:8}
+];
+
+var allRows = [];
+var allResp = [];
+var currentFilter = "all";
+var currentSort = "stand_name";
+var sortDir = 1;
+var currentView = "list";
+
+/* ---- Auth ---- */
+function login() {
+  if (document.getElementById("pwdInput").value === PASSWORD) {
+    sessionStorage.setItem("kerauth","1");
+    document.getElementById("loginWrap").style.display = "none";
+    document.getElementById("appWrap").style.display = "block";
+    init();
+  } else {
+    document.getElementById("loginErr").style.display = "block";
+    document.getElementById("pwdInput").value = "";
+  }
+}
+function logout() {
+  sessionStorage.removeItem("kerauth");
+  document.getElementById("loginWrap").style.display = "flex";
+  document.getElementById("appWrap").style.display = "none";
+}
+
+/* ---- API ---- */
+function sbHeaders() {
+  return {"apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY,"Content-Type":"application/json","Prefer":"return=representation"};
+}
+function sbGet(path) {
+  return fetch(SUPABASE_URL+"/rest/v1/"+path,{headers:sbHeaders()}).then(function(r){return r.json();});
+}
+function sbPost(table,data) {
+  return fetch(SUPABASE_URL+"/rest/v1/"+table,{method:"POST",headers:sbHeaders(),body:JSON.stringify(data)}).then(function(r){return r.json();});
+}
+function sbDelete(table,filter) {
+  return fetch(SUPABASE_URL+"/rest/v1/"+table+"?"+filter,{method:"DELETE",headers:Object.assign({},sbHeaders(),{"Prefer":"return=representation"})}).then(function(r){return r.status;});
+}
+
+/* ---- Init ---- */
+function init() {
+  document.getElementById("topbarDate").textContent = new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}) + " \u2014 donn\u00e9es en temps r\u00e9el";
+  buildStandFilters();
+  loadAll();
+  setInterval(loadAll, 15000); // Rafraîchissement toutes les 15s
+}
+
+function loadAll() {
+  return Promise.all([
+    sbGet("inscriptions?select=id,stand_id,slot,name,is_ado,children,phone,email,code,created_at&order=created_at.asc"),
+    sbGet("responsables?select=id,stand_id,stand_name,name,phone,email,created_at&order=created_at.asc")
+  ]).then(function(results) {
+    allRows = Array.isArray(results[0]) ? results[0] : [];
+    allResp = Array.isArray(results[1]) ? results[1] : [];
+    // Enrichir avec stand_name
+    for (var i = 0; i < allRows.length; i++) {
+      var r = allRows[i];
+      for (var j = 0; j < STANDS.length; j++) { if (STANDS[j].id === r.stand_id) { r.stand_name = STANDS[j].name; break; } }
+      if (!r.stand_name) r.stand_name = r.stand_id;
+      // childStr
+      if (r.children && r.children.length) {
+        var parts = [];
+        for (var ci = 0; ci < r.children.length; ci++) { parts.push(r.children[ci].child + (r.children[ci].klass ? " (" + r.children[ci].klass + ")" : "")); }
+        r.childStr = parts.join(" | ");
+      } else { r.childStr = ""; }
+    }
+    renderStats();
+    renderTable();
+    if (currentView === "summary") renderSummary();
+    if (currentView === "resp") renderResp();
+  });
+}
+
+/* ---- Stats ---- */
+function renderStats() {
+  var total = allRows.length;
+  var full = 0;
+  var totalCap = 0;
+  for (var i = 0; i < STANDS.length; i++) {
+    var s = STANDS[i];
+    var smax = s.max || 4;
+    for (var j = 0; j < s.slots.length; j++) {
+      totalCap += smax;
+      var key = s.id + ":" + s.slots[j];
+      var cnt = 0;
+      for (var k = 0; k < allRows.length; k++) { if (allRows[k].stand_id === s.id && allRows[k].slot === s.slots[j]) cnt++; }
+      if (cnt >= smax) full++;
+    }
+  }
+  document.getElementById("statTotal").textContent = total;
+  document.getElementById("statFull").textContent = full;
+  document.getElementById("statLeft").textContent = totalCap - total;
+  document.getElementById("statResp").textContent = allResp.length;
+}
+
+/* ---- Filtres ---- */
+function buildStandFilters() {
+  var html = "";
+  for (var i = 0; i < STANDS.length; i++) {
+    html += '<button class="filter-chip" onclick="setFilter(\'' + STANDS[i].id + '\',this)">' + esc(STANDS[i].name) + '</button>';
+  }
+  document.getElementById("standFilters").innerHTML = html;
+}
+function setFilter(val, el) {
+  currentFilter = val;
+  document.querySelectorAll(".filter-chip").forEach(function(c){ c.classList.remove("active"); });
+  el.classList.add("active");
+  renderTable();
+}
+function sortBy(col) {
+  if (currentSort === col) sortDir *= -1; else { currentSort = col; sortDir = 1; }
+  renderTable();
+}
+
+/* ---- Tableau ---- */
+function renderTable() {
+  var search = (document.getElementById("searchInput") || {value:""}).value.toLowerCase();
+  var rows = allRows.slice();
+  if (currentFilter !== "all") rows = rows.filter(function(r){ return r.stand_id === currentFilter; });
+  if (search) rows = rows.filter(function(r){
+    return (r.name||"").toLowerCase().indexOf(search) >= 0
+      || (r.email||"").toLowerCase().indexOf(search) >= 0
+      || (r.childStr||"").toLowerCase().indexOf(search) >= 0
+      || (r.code||"").toLowerCase().indexOf(search) >= 0;
+  });
+  rows.sort(function(a,b){ return String(a[currentSort]||"").localeCompare(String(b[currentSort]||""),"fr") * sortDir; });
+  var tbody = document.getElementById("tableBody");
+  if (!rows.length) { tbody.innerHTML = '<tr class="empty-row"><td colspan="10">Aucune inscription trouv\u00e9e</td></tr>'; return; }
+  var html = "";
+  for (var i = 0; i < rows.length; i++) {
+    var r = rows[i];
+    var dt = r.created_at ? new Date(r.created_at).toLocaleString("fr-FR") : "";
+    html += '<tr>'
+      + '<td>' + esc(r.stand_name) + '</td>'
+      + '<td>' + esc(r.slot) + '</td>'
+      + '<td><strong>' + esc(r.name) + '</strong></td>'
+      + '<td style="text-align:center">' + (r.is_ado ? '<span class="badge-ado">Ado</span>' : '') + '</td>'
+      + '<td>' + esc(r.childStr) + '</td>'
+      + '<td>' + esc(r.phone) + '</td>'
+      + '<td><a href="mailto:' + esc(r.email) + '" style="color:var(--accent2)">' + esc(r.email) + '</a></td>'
+      + '<td style="font-family:monospace;font-size:12px;color:var(--accent)">' + esc(r.code) + '</td>'
+      + '<td style="color:var(--text-muted);font-size:12px">' + dt + '</td>'
+      + '<td><button class="btn-del" onclick="deleteRow(\'' + r.id + '\')">✕</button></td>'
+      + '</tr>';
+  }
+  tbody.innerHTML = html;
+}
+
+function deleteRow(id) {
+  if (!confirm("Supprimer cette inscription ?")) return;
+  sbDelete("inscriptions", "id=eq." + id).then(function() { loadAll(); });
+}
+
+/* ---- Vue par stand ---- */
+function renderSummary() {
+  var html = "";
+  for (var i = 0; i < STANDS.length; i++) {
+    var s = STANDS[i];
+    var smax = s.max || 4;
+    var lines = "";
+    for (var j = 0; j < s.slots.length; j++) {
+      var sl = s.slots[j];
+      var cnt = 0;
+      for (var k = 0; k < allRows.length; k++) { if (allRows[k].stand_id === s.id && allRows[k].slot === sl) cnt++; }
+      var full = cnt >= smax;
+      lines += '<div class="slot-line"><span>' + sl + '</span><span><strong>' + cnt + '/' + smax + '</strong> <span class="badge-small ' + (full ? "badge-full" : "badge-ok") + '">' + (full ? "complet" : (smax-cnt) + " dispo") + '</span></span></div>';
+    }
+    html += '<div class="summary-card"><h3>' + esc(s.name) + '</h3>' + lines + '</div>';
+  }
+  document.getElementById("summaryGrid").innerHTML = html;
+}
+
+/* ---- Responsables ---- */
+function renderResp() {
+  var html = "";
+  for (var i = 0; i < allResp.length; i++) {
+    var v = allResp[i];
+    var dt = v.created_at ? new Date(v.created_at).toLocaleString("fr-FR") : "";
+    html += '<tr><td>' + esc(v.stand_name) + '</td><td><strong>' + esc(v.name) + '</strong></td>'
+      + '<td>' + esc(v.phone) + '</td>'
+      + '<td><a href="mailto:' + esc(v.email) + '" style="color:var(--accent2)">' + esc(v.email) + '</a></td>'
+      + '<td style="color:var(--text-muted);font-size:12px">' + dt + '</td>'
+      + '<td><button class="btn-del" onclick="deleteResp(\'' + v.id + '\')">✕</button></td></tr>';
+  }
+  document.getElementById("respTableBody").innerHTML = html || '<tr class="empty-row"><td colspan="6">Aucun responsable enregistr\u00e9</td></tr>';
+}
+
+function deleteResp(id) {
+  if (!confirm("Supprimer ce responsable ?")) return;
+  sbDelete("responsables", "id=eq." + id).then(function() { loadAll(); });
+}
+
+function switchView(v) {
+  currentView = v;
+  var views = ["list","summary","resp"];
+  document.querySelectorAll(".view-tab").forEach(function(t,i){ t.classList.toggle("active", views[i] === v); });
+  document.getElementById("viewList").classList.toggle("show", v === "list");
+  document.getElementById("viewSummary").classList.toggle("show", v === "summary");
+  document.getElementById("viewResp").classList.toggle("show", v === "resp");
+  if (v === "summary") renderSummary();
+  if (v === "resp") renderResp();
+}
+
+/* ---- Ajout responsable ---- */
+function openAddResp() {
+  resetAddResp();
+  var sel = document.getElementById("arStand");
+  sel.innerHTML = '<option value="">— Choisissez un stand —</option>';
+  for (var i = 0; i < STANDS.length; i++) {
+    var opt = document.createElement("option");
+    opt.value = STANDS[i].id; opt.textContent = STANDS[i].name;
+    sel.appendChild(opt);
+  }
+  document.getElementById("overlayAddResp").classList.add("open");
+  setTimeout(function(){ document.getElementById("arName").focus(); }, 100);
+}
+function closeAddResp() { document.getElementById("overlayAddResp").classList.remove("open"); }
+function resetAddResp() {
+  ["arName","arPhone","arEmail"].forEach(function(id){ document.getElementById(id).value = ""; });
+  if (document.getElementById("arStand")) document.getElementById("arStand").value = "";
+  document.getElementById("arErr").style.display = "none";
+  document.getElementById("addRespForm").style.display = "block";
+  document.getElementById("addRespConfirm").style.display = "none";
+}
+function submitAddResp() {
+  var name    = document.getElementById("arName").value.trim();
+  var phone   = document.getElementById("arPhone").value.trim();
+  var email   = document.getElementById("arEmail").value.trim();
+  var standId = document.getElementById("arStand").value;
+  var errEl   = document.getElementById("arErr");
+  if (!name || !phone || !email || !standId) { errEl.textContent = "Merci de remplir tous les champs."; errEl.className = "msg-form error"; errEl.style.display = "block"; return; }
+  if (email.indexOf("@") < 0) { errEl.textContent = "E-mail invalide."; errEl.className = "msg-form error"; errEl.style.display = "block"; return; }
+  var stand = null;
+  for (var i = 0; i < STANDS.length; i++) { if (STANDS[i].id === standId) { stand = STANDS[i]; break; } }
+  var btn = document.getElementById("btnAddResp");
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Enregistrement...';
+  sbPost("responsables", {stand_id: standId, stand_name: stand.name, name: name, phone: phone, email: email.toLowerCase()})
+    .then(function() {
+      btn.disabled = false; btn.textContent = "Enregistrer";
+      var slotTxt = stand.slots.join(", ");
+      document.getElementById("arConfirmDetail").innerHTML =
+        "<div><strong>Responsable :</strong> " + esc(name) + "</div>"
+        + "<div><strong>Stand :</strong> " + esc(stand.name) + "</div>"
+        + "<div><strong>Cr\u00e9neaux :</strong> " + slotTxt + "</div>"
+        + "<div><strong>T\u00e9l\u00e9phone :</strong> " + esc(phone) + "</div>"
+        + "<div><strong>E-mail :</strong> " + esc(email) + "</div>";
+      document.getElementById("addRespForm").style.display = "none";
+      document.getElementById("addRespConfirm").style.display = "block";
+      loadAll();
+    })
+    .catch(function() { btn.disabled = false; btn.textContent = "Enregistrer"; errEl.textContent = "Erreur r\u00e9seau."; errEl.className = "msg-form error"; errEl.style.display = "block"; });
+}
+
+/* ---- Exports ---- */
+function exportCSV() {
+  var csv = "\uFEFFStand,Cr\u00e9neau,B\u00e9n\u00e9vole,Adolescent,Enfant(s),T\u00e9l\u00e9phone,Email,Code,Date inscription\n";
+  for (var i = 0; i < allRows.length; i++) {
+    var r = allRows[i];
+    var dt = r.created_at ? new Date(r.created_at).toLocaleString("fr-FR") : "";
+    csv += '"'+r.stand_name+'","'+r.slot+'","'+r.name+'",'+(r.is_ado?'"Oui"':'""')+',"'+(r.childStr||"")+'","'+r.phone+'","'+r.email+'","'+r.code+'","'+dt+'"\n';
+  }
+  if (allResp.length) {
+    csv += "\n\uFEFFRESPONSABLES DE STAND\nStand,Responsable,T\u00e9l\u00e9phone,Email,Date\n";
+    for (var j = 0; j < allResp.length; j++) {
+      var v = allResp[j];
+      var dt2 = v.created_at ? new Date(v.created_at).toLocaleString("fr-FR") : "";
+      csv += '"'+v.stand_name+'","'+v.name+'","'+v.phone+'","'+v.email+'","'+dt2+'"\n';
+    }
+  }
+  dl(csv, "benevoles_kermesse.csv", "text/csv;charset=utf-8");
+}
+
+function exportTxt() {
+  var txt = "B\u00c9N\u00c9VOLES KERMESSE\n" + "=".repeat(50) + "\n\n";
+  for (var i = 0; i < STANDS.length; i++) {
+    var s = STANDS[i];
+    txt += s.name.toUpperCase() + "\n" + "-".repeat(35) + "\n";
+    for (var j = 0; j < s.slots.length; j++) {
+      var sl = s.slots[j];
+      var vols = allRows.filter(function(r){ return r.stand_id === s.id && r.slot === sl; });
+      txt += "  " + sl + "  (" + vols.length + "/" + (s.max||4) + ")\n";
+      if (!vols.length) txt += "    \u2014 aucune inscription\n";
+      else for (var k = 0; k < vols.length; k++) {
+        var v = vols[k];
+        txt += "    \u2022 " + v.name + (v.is_ado?" [ADO]":"") + "  |  " + (v.childStr||"") + "  |  " + v.phone + "  |  " + v.email + "  |  code: " + v.code + "\n";
+      }
+    }
+    txt += "\n";
+  }
+  if (allResp.length) {
+    txt += "RESPONSABLES DE STAND\n" + "=".repeat(50) + "\n";
+    for (var ri = 0; ri < allResp.length; ri++) {
+      var rp = allResp[ri];
+      txt += "  \u2022 " + rp.stand_name + " \u2014 " + rp.name + "  |  " + rp.phone + "  |  " + rp.email + "\n";
+    }
+  }
+  dl(txt, "benevoles_kermesse.txt", "text/plain;charset=utf-8");
+}
+
+function resetAll() {
+  if (!confirm("Effacer TOUTES les inscriptions et responsables ? Action irr\u00e9versible.")) return;
+  if (!confirm("Confirmation finale ?")) return;
+  Promise.all([
+    sbDelete("inscriptions","id=not.is.null"),
+    sbDelete("responsables","id=not.is.null")
+  ]).then(function(){ loadAll(); });
+}
+
+function dl(content, filename, type) {
+  var a = document.createElement("a");
+  a.href = "data:" + type + "," + encodeURIComponent(content);
+  a.download = filename; a.click();
+}
+
+function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+document.getElementById("overlayAddResp").addEventListener("click", function(e){ if(e.target===this) closeAddResp(); });
+document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeAddResp(); });
+
+if (sessionStorage.getItem("kerauth") === "1") {
+  document.getElementById("loginWrap").style.display = "none";
+  document.getElementById("appWrap").style.display = "block";
+  init();
+}
+</script>
+</body>
+</html>

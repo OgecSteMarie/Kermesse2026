@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscriptions Bénévoles — Kermesse</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F4EF;--card:#FFF;--accent:#D4553A;--accent2:#2B4A3F;--text:#1A1A1A;--text-soft:#666;--text-muted:#999;--border:#E2DDD6;--success-bg:#EAF3E8;--success:#2E7D32;--full-bg:#FDECEA;--full:#C62828;--warn-bg:#FFF8E1;--warn:#E65100;--info-bg:#EEF4FF;--info:#1A56C4;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+.hero{background:var(--accent2);color:white;padding:2.5rem 2rem 2rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-40px;width:140px;height:140px;border-radius:50%;background:rgba(212,85,58,0.15)}
+.hero-tag{display:inline-block;background:var(--accent);color:white;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,36px);font-weight:700;line-height:1.2;margin-bottom:8px}
+.hero p{font-size:14px;opacity:.75;max-width:420px;margin:0 auto}
+.stats-row{display:flex;gap:1px;background:var(--border);border-bottom:1px solid var(--border)}
+.stat-item{flex:1;background:var(--card);padding:.9rem .5rem;text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--accent2);display:block}
+.stat-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.main{max-width:820px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.steps-box{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1rem 1.25rem;margin-bottom:1.5rem}
+.steps-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--accent2);margin-bottom:.75rem}
+.step-row{display:flex;gap:10px;align-items:flex-start;font-size:13px;margin-bottom:6px}
+.step-num{background:var(--accent2);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px}
+.top-actions{display:flex;gap:8px;justify-content:flex-end;margin-bottom:1.25rem}
+.btn-action{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-soft);cursor:pointer;transition:all .15s}
+.btn-action:hover{border-color:var(--accent2);color:var(--accent2)}
+.stands-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem}
+.stand-chip{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-soft);cursor:pointer;transition:all .15s;white-space:nowrap}
+.stand-chip:hover{border-color:var(--accent2);color:var(--accent2)}
+.stand-chip.active{background:var(--accent2);color:white;border-color:var(--accent2);font-weight:500}
+.stand-chip.has-full{border-color:var(--accent)}
+.panel-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;margin-bottom:1rem;color:var(--accent2)}
+.slots-grid{display:flex;flex-direction:column;gap:10px}
+.slot-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+.slot-head{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border);background:#FAFAF8;flex-wrap:wrap;gap:6px}
+.slot-time{font-weight:500;font-size:14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
+.badge-ok{background:var(--success-bg);color:var(--success)}
+.badge-full{background:var(--full-bg);color:var(--full)}
+.badge-ado{font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;background:var(--warn-bg);color:var(--warn)}
+.slot-body{padding:10px 16px 12px}
+.spots-row{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap}
+.spot{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px}
+.spot.taken{background:#F0F0EE;border-color:#D8D4CC}
+.spot.free{background:var(--success-bg);border-color:#C5DFC2}
+.btn-add{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px;border-radius:8px;border:1.5px dashed var(--border);background:transparent;color:var(--accent2);cursor:pointer;transition:all .15s}
+.btn-add:hover{background:var(--accent2);color:white;border-style:solid;border-color:var(--accent2)}
+.btn-add:disabled{opacity:.4;cursor:default}
+.btn-add:disabled:hover{background:transparent;color:var(--text-muted);border-style:dashed;border-color:var(--border)}
+.loading-bar{text-align:center;padding:2rem;color:var(--text-muted);font-size:13px}
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,26,26,0.5);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:var(--card);border-radius:var(--radius);width:100%;max-width:480px;overflow:hidden;animation:slideUp .2s ease;max-height:92vh;overflow-y:auto}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{background:var(--accent2);color:white;padding:1.1rem 1.25rem;position:sticky;top:0;z-index:1}
+.modal-head h2{font-family:'Playfair Display',serif;font-size:17px;font-weight:600}
+.modal-head p{font-size:13px;opacity:.75;margin-top:2px}
+.modal-body{padding:1.25rem}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:5px}
+.field input{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;transition:border-color .15s}
+.field input:focus{border-color:var(--accent2);background:white}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ado-check{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:8px 12px;background:var(--warn-bg);border:1px solid #FFD180;border-radius:8px}
+.ado-check input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent2);cursor:pointer;flex-shrink:0}
+.ado-check label{font-size:13px;color:var(--warn);cursor:pointer;font-weight:500;margin:0}
+.msg{font-size:12px;margin-top:8px;padding:9px 12px;border-radius:6px;display:none;line-height:1.5}
+.msg.error{background:var(--full-bg);color:var(--full)}
+.msg.warn{background:var(--warn-bg);color:var(--warn);border:1px solid #FFD180}
+.msg.info{background:var(--info-bg);color:var(--info)}
+.modal-footer{display:flex;gap:8px;padding:0 1.25rem 1.25rem;flex-wrap:wrap}
+.btn-confirm{flex:1;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;border-radius:8px;border:none;background:var(--accent);color:white;cursor:pointer;transition:opacity .15s;white-space:nowrap}
+.btn-confirm:hover{opacity:.88}
+.btn-confirm.green{background:var(--accent2)}
+.btn-confirm:disabled{opacity:.4;cursor:default}
+.btn-secondary{font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-soft);cursor:pointer;white-space:nowrap}
+.btn-secondary:hover{background:var(--bg)}
+.confirm-screen{display:none;padding:1.5rem 1.25rem}
+.confirm-screen.show{display:block}
+.confirm-icon{font-size:36px;text-align:center;margin-bottom:12px}
+.confirm-screen h3{font-family:'Playfair Display',serif;font-size:18px;text-align:center;margin-bottom:6px;color:var(--accent2)}
+.confirm-screen .sub{font-size:13px;color:var(--text-soft);text-align:center;margin-bottom:1rem}
+.confirm-list{margin:0 0 1rem;font-size:13px;background:#F4F8F4;border-radius:8px;padding:10px 14px}
+.confirm-list div{padding:3px 0;border-bottom:1px solid #E8EDE8}
+.confirm-list div:last-child{border:none}
+.code-box{background:#FFF8F0;border:2px dashed var(--accent);border-radius:10px;padding:14px;text-align:center;margin-bottom:1rem}
+.code-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:500;margin-bottom:6px}
+.code-val{font-family:monospace;font-size:26px;font-weight:700;letter-spacing:.15em;color:var(--accent2)}
+.code-hint{font-size:11px;color:var(--text-muted);margin-top:6px}
+.btn-close{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;border-radius:8px;border:none;background:var(--accent2);color:white;cursor:pointer}
+.person-section{margin-bottom:1rem}
+.person-header{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);padding:4px 0;margin-bottom:6px;border-bottom:1px solid var(--border)}
+.my-slots-list{display:flex;flex-direction:column;gap:6px;margin-bottom:4px}
+.my-slot-row{display:flex;justify-content:space-between;align-items:center;background:#F9F8F6;border-radius:8px;padding:9px 12px;border:1px solid var(--border);font-size:13px}
+.my-slot-info{flex:1}
+.my-slot-stand{font-weight:500;color:var(--text)}
+.my-slot-time{font-size:12px;color:var(--text-soft);margin-top:1px}
+.my-slot-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
+.my-slot-code{font-family:monospace;font-size:11px;color:var(--accent);margin-top:2px}
+.btn-unsub{font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid #FFCDD2;background:var(--full-bg);color:var(--full);cursor:pointer;transition:all .15s;white-space:nowrap;margin-left:8px}
+.btn-unsub:hover{background:var(--full);color:white}
+.divider{border:none;border-top:1px solid var(--border);margin:1rem 0}
+.section-sub{font-size:11px;font-weight:500;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
+.guide{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-top:2rem}
+.guide-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--accent2);margin-bottom:1rem}
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
+.guide-block{background:var(--bg);border-radius:8px;padding:10px 12px;border:1px solid var(--border)}
+.guide-block-title{font-size:12px;font-weight:500;color:var(--accent2);margin-bottom:4px}
+.guide-block p{font-size:12px;color:var(--text-soft);line-height:1.5}
+.guide-alert{background:var(--warn-bg);border:1px solid #FFD180;border-radius:8px;padding:10px 12px;font-size:12px;color:var(--warn);line-height:1.5;margin-bottom:8px}
+.guide-parents{background:var(--info-bg);border:1px solid #BDD3FF;border-radius:8px;padding:10px 12px;font-size:12px;color:var(--info);line-height:1.5}
+.notice{font-size:12px;color:var(--text-muted);text-align:center;margin-top:1.5rem;padding:10px;border-top:1px solid var(--border)}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.field-row{grid-template-columns:1fr}.hero{padding:2rem 1.25rem 1.5rem}.modal-footer{flex-direction:column}.guide-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">Kermesse de l'école</div>
+  <h1>Inscriptions bénévoles</h1>
+  <p>Choisissez vos créneaux et inscrivez-vous en quelques secondes</p>
+</div>
+
+<div class="stats-row">
+  <div class="stat-item"><span class="stat-num" id="statTotal">—</span><span class="stat-lbl">Inscrits</span></div>
+  <div class="stat-item"><span class="stat-num" id="statFull">—</span><span class="stat-lbl">Créneaux complets</span></div>
+  <div class="stat-item"><span class="stat-num" id="statLeft">—</span><span class="stat-lbl">Places restantes</span></div>
+</div>
+
+<div class="main">
+  <div class="steps-box">
+    <div class="steps-title">Comment s'inscrire ?</div>
+    <div class="step-row"><span class="step-num">1</span><span><strong>Sélectionnez un stand</strong> en cliquant sur son nom dans la liste ci-dessous.</span></div>
+    <div class="step-row"><span class="step-num">2</span><span><strong>Choisissez un créneau</strong> disponible et cliquez sur <em>"+ M'inscrire sur ce créneau"</em>.</span></div>
+    <div class="step-row"><span class="step-num">3</span><span><strong>Complétez le formulaire</strong> et confirmez. Répétez pour d'autres créneaux. <span style="color:var(--accent2);font-weight:500">Deux parents peuvent s'inscrire avec la même adresse e-mail</span> — chacun saisit son propre nom.</span></div>
+  </div>
+
+  <div class="top-actions">
+    <button class="btn-action" onclick="openMyAccount()">Mes inscriptions / Annuler</button>
+  </div>
+
+  <div class="stands-nav" id="standsNav"></div>
+  <div class="panel-title" id="panelTitle"></div>
+  <div class="slots-grid" id="slotsGrid"><div class="loading-bar">Chargement des créneaux...</div></div>
+
+  <div class="notice">Vos données sont utilisées uniquement pour l'organisation de la kermesse et ne sont pas visibles par les autres participants.</div>
+
+  <div class="guide">
+    <div class="guide-title">Mode d'emploi complet</div>
+    <div class="guide-grid">
+      <div class="guide-block">
+        <div class="guide-block-title">S'inscrire</div>
+        <p>Choisissez un stand et un créneau, remplissez le formulaire. Chaque inscription génère un <strong>code personnel</strong> à conserver. Vous pouvez vous inscrire sur plusieurs créneaux.</p>
+      </div>
+      <div class="guide-block">
+        <div class="guide-block-title">Mes inscriptions</div>
+        <p>Cliquez sur <em>"Mes inscriptions / Annuler"</em> et saisissez votre e-mail pour voir tous vos créneaux et ceux des membres de votre famille.</p>
+      </div>
+      <div class="guide-block">
+        <div class="guide-block-title">Annuler un créneau</div>
+        <p>Depuis <em>"Mes inscriptions"</em>, cliquez sur <em>"Annuler"</em> à côté du créneau. Vous pouvez annuler un seul créneau sans toucher aux autres.</p>
+      </div>
+      <div class="guide-block">
+        <div class="guide-block-title">Compléter plus tard</div>
+        <p>Revenez à tout moment. Vos informations seront pré-remplies automatiquement si vous utilisez le même e-mail et nom.</p>
+      </div>
+    </div>
+    <div class="guide-alert"><strong>Conflit horaire :</strong> impossible de s'inscrire deux fois sur le même créneau horaire, même sur des stands différents.</div>
+    <div class="guide-parents"><strong>Deux parents avec la même adresse e-mail ?</strong> Chaque parent s'inscrit avec <strong>son propre nom</strong>. Saisissez l'e-mail commun dans <em>"Mes inscriptions"</em> pour voir les créneaux des deux parents.</div>
+  </div>
+</div>
+
+<!-- Modal inscription -->
+<div class="overlay" id="overlayInscription">
+  <div class="modal">
+    <div id="formScreen">
+      <div class="modal-head">
+        <h2 id="modalTitle">Inscription</h2>
+        <p id="modalSub"></p>
+      </div>
+      <div class="modal-body">
+        <div class="msg warn" id="conflictMsg"></div>
+        <div class="field">
+          <label>Votre nom et prénom *</label>
+          <input id="fName" placeholder="Marie Dupont" oninput="onIdentityInput()"/>
+        </div>
+        <div class="ado-check">
+          <input type="checkbox" id="fIsAdo" onchange="checkConflict()"/>
+          <label for="fIsAdo">Je suis un(e) adolescent(e)</label>
+        </div>
+        <div id="childrenFields">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+            <div class="field" style="margin-bottom:0"><label>Nom de l'enfant 1 *</label><input class="fChild" placeholder="Léa Dupont"/></div>
+            <div class="field" style="margin-bottom:0"><label>Classe + prénom enseignant(e) *</label><input class="fClass" placeholder="CE2 — Mme Martin"/></div>
+          </div>
+        </div>
+        <button type="button" id="btnAddChild" onclick="addChildRow()" style="font-family:inherit;font-size:12px;padding:5px 12px;border-radius:6px;border:1px dashed var(--border);background:transparent;color:var(--accent2);cursor:pointer;margin-bottom:12px">+ Ajouter un autre enfant (max 4)</button>
+        <div class="field-row">
+          <div class="field"><label>Téléphone *</label><input id="fPhone" type="tel" placeholder="06 12 34 56 78"/></div>
+          <div class="field"><label>E-mail *</label><input id="fEmail" type="email" placeholder="famille@email.com" oninput="onIdentityInput()"/></div>
+        </div>
+        <div class="msg info" style="display:block;font-size:12px;margin-top:4px">Deux parents peuvent utiliser la même adresse e-mail — chacun s'inscrit avec <strong>son propre nom</strong>.</div>
+        <div class="msg error" id="errMsg"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeInscription()">Annuler</button>
+        <button class="btn-confirm" id="btnSubmit" onclick="submitForm()">Confirmer l'inscription</button>
+      </div>
+    </div>
+    <div class="confirm-screen" id="confirmScreen">
+      <div class="confirm-icon">🎉</div>
+      <h3>Inscription confirmée !</h3>
+      <div class="sub">Merci ! Conservez votre code pour gérer vos inscriptions.</div>
+      <div class="confirm-list" id="confirmList"></div>
+      <div class="code-box">
+        <div class="code-label">Votre code d'annulation</div>
+        <div class="code-val" id="confirmCode"></div>
+        <div class="code-hint">Ou retrouvez vos créneaux via "Mes inscriptions"</div>
+      </div>
+      <button class="btn-close" onclick="closeInscription()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal "Mes inscriptions" -->
+<div class="overlay" id="overlayAccount">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Mes inscriptions</h2>
+      <p>Toutes les inscriptions de votre famille</p>
+    </div>
+    <div class="modal-body">
+      <div id="accountStep1">
+        <div class="msg info" style="display:block;margin-bottom:14px">Saisissez votre adresse e-mail pour voir les inscriptions de <strong>toute la famille</strong>.</div>
+        <div class="field">
+          <label>Adresse e-mail de la famille</label>
+          <input id="accountEmail" type="email" placeholder="famille@email.com"/>
+        </div>
+        <div class="msg error" id="accountErr"></div>
+      </div>
+      <div id="accountStep2" style="display:none">
+        <div id="familySlots"></div>
+        <div class="divider"></div>
+        <div class="section-sub">Ajouter un créneau</div>
+        <p style="font-size:13px;color:var(--text-soft);margin-bottom:10px">Fermez cette fenêtre et choisissez un créneau — vos informations seront pré-remplies.</p>
+        <button class="btn-secondary" style="width:100%" onclick="closeAccountAndPrefill()">Retour aux stands →</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeAccount()">Fermer</button>
+      <button class="btn-confirm green" id="btnFindEmail" onclick="findByEmail()">Voir mes inscriptions</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var SUPABASE_URL = "https://rwieiemshitqcvzjzvgy.supabase.co";
+var SUPABASE_KEY = "sb_publishable_m917FPsrdzKkvYneAVg2uw_oTXKau9I";
+
+var STANDS = [
+  {id:"defile",    name:"D\u00e9fil\u00e9",                          slots:["14h\u201315h"],                                                    max:15},
+  {id:"bar",       name:"Bar",                                        slots:["16h\u201317h","17h\u201318h","18h\u201319h","19h\u201320h"],        max:4},
+  {id:"laser",     name:"Tir laser biathlon",                         slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"piscine",   name:"Piscine \u00e0 balles (1-4 ans)",            slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"playpark",  name:"Gonflable Playpark XXL (Petits)",            slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"comics",    name:"Gonflable Comics Run (Grands)",              slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"velo",      name:"Parcours v\u00e9los de l\u2019\u00e9cole",   slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"jeuxbois",  name:"Jeux en bois / Grenouille",                  slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"bungee",    name:"Bungee Trampoline",                          slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"arc",       name:"Tir \u00e0 l\u2019arc",                      slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"chamboule", name:"Chamboule Tout",                             slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"peche",     name:"P\u00eache \u00e0 la ligne",                 slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"maquillage",name:"Maquillage",                                 slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"confiserie",name:"Confiserie",                                 slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
+  {id:"repas",     name:"Repas",                                      slots:["19h\u201320h"],                                                    max:8}
+];
+var MAX_ADO = 3;
+var currentStand = STANDS[0].id;
+var formTarget = null;
+var prefillData = {email:"", name:"", children:[{child:"",klass:""}], phone:""};
+// Cache local des comptages pour affichage rapide
+var countCache = {};
+
+/* ---- API Supabase ---- */
+function sbHeaders() {
+  return {
+    "apikey": SUPABASE_KEY,
+    "Authorization": "Bearer " + SUPABASE_KEY,
+    "Content-Type": "application/json",
+    "Prefer": "return=representation"
+  };
+}
+
+function sbGet(path) {
+  return fetch(SUPABASE_URL + "/rest/v1/" + path, {headers: sbHeaders()})
+    .then(function(r){ return r.json(); });
+}
+
+function sbPost(table, data) {
+  return fetch(SUPABASE_URL + "/rest/v1/" + table, {
+    method: "POST",
+    headers: sbHeaders(),
+    body: JSON.stringify(data)
+  }).then(function(r){ return r.json(); });
+}
+
+function sbDelete(table, filter) {
+  return fetch(SUPABASE_URL + "/rest/v1/" + table + "?" + filter, {
+    method: "DELETE",
+    headers: Object.assign({}, sbHeaders(), {"Prefer": "return=representation"})
+  }).then(function(r){ return r.status; });
+}
+
+/* ---- Chargement données ---- */
+function loadCounts() {
+  return sbGet("inscriptions?select=stand_id,slot").then(function(rows) {
+    countCache = {};
+    if (!Array.isArray(rows)) return;
+    for (var i = 0; i < rows.length; i++) {
+      var k = rows[i].stand_id + ":" + rows[i].slot;
+      countCache[k] = (countCache[k] || 0) + 1;
+    }
+  });
+}
+
+function loadAdoCounts() {
+  return sbGet("inscriptions?select=stand_id,slot,is_ado&is_ado=eq.true").then(function(rows) {
+    window.adoCache = {};
+    if (!Array.isArray(rows)) return;
+    for (var i = 0; i < rows.length; i++) {
+      var k = rows[i].stand_id + ":" + rows[i].slot;
+      window.adoCache[k] = (window.adoCache[k] || 0) + 1;
+    }
+  });
+}
+
+function getCount(key) { return countCache[key] || 0; }
+function getAdoCount(key) { return (window.adoCache && window.adoCache[key]) || 0; }
+
+/* ---- Rendu ---- */
+function renderNav() {
+  var html = "";
+  for (var i = 0; i < STANDS.length; i++) {
+    var s = STANDS[i];
+    var hasFull = false;
+    for (var j = 0; j < s.slots.length; j++) {
+      if (getCount(s.id + ":" + s.slots[j]) >= s.max) { hasFull = true; break; }
+    }
+    var cls = "stand-chip" + (s.id === currentStand ? " active" : "") + (hasFull ? " has-full" : "");
+    html += '<button class="' + cls + '" onclick="selectStand(\'' + s.id + '\')">' + esc(s.name) + '</button>';
+  }
+  document.getElementById("standsNav").innerHTML = html;
+}
+
+function selectStand(id) { currentStand = id; renderNav(); renderSlots(); }
+
+function renderSlots() {
+  var stand = null;
+  for (var i = 0; i < STANDS.length; i++) { if (STANDS[i].id === currentStand) { stand = STANDS[i]; break; } }
+  if (!stand) return;
+  var smax = stand.max || 4;
+  document.getElementById("panelTitle").textContent = stand.name;
+  var html = "";
+  for (var si = 0; si < stand.slots.length; si++) {
+    var sl = stand.slots[si];
+    var key = stand.id + ":" + sl;
+    var count = getCount(key);
+    var full = count >= smax;
+    var adoCount = getAdoCount(key);
+    var adoFull = adoCount >= MAX_ADO;
+    var spots = "";
+    var spotStyle = smax > 8 ? "width:26px;height:26px;font-size:13px" : "";
+    for (var pi = 0; pi < smax; pi++) {
+      spots += '<div class="spot ' + (pi < count ? "taken" : "free") + '" style="' + spotStyle + '">' + (pi < count ? "\uD83D\uDC64" : "\u25CB") + '</div>';
+    }
+    var adoBadge = adoFull
+      ? '<span class="badge-ado">Ados complets (3/3)</span>'
+      : (adoCount > 0 ? '<span style="font-size:10px;background:#F9F8F6;color:var(--text-muted);padding:2px 7px;border-radius:10px">' + adoCount + '/3 ado' + (adoCount > 1 ? 's' : '') + '</span>' : '');
+    html += '<div class="slot-card">'
+      + '<div class="slot-head">'
+      + '<span class="slot-time">' + sl + (adoBadge ? ' ' + adoBadge : '') + '</span>'
+      + '<span class="badge ' + (full ? "badge-full" : "badge-ok") + '">' + count + '/' + smax
+      + ' \u2014 ' + (full ? "complet" : (smax - count) + " place" + ((smax - count) > 1 ? "s" : "") + " dispo") + '</span>'
+      + '</div>'
+      + '<div class="slot-body"><div class="spots-row">' + spots + '</div>'
+      + '<button class="btn-add"' + (full ? ' disabled' : '') + ' onclick="openInscription(\'' + key + '\',\'' + esc(stand.name) + '\',\'' + sl + '\')">'
+      + (full ? 'Cr\u00e9neau complet' : '+ M\'inscrire sur ce cr\u00e9neau') + '</button>'
+      + '</div></div>';
+  }
+  document.getElementById("slotsGrid").innerHTML = html;
+  renderStats();
+}
+
+function renderStats() {
+  var total = 0, full = 0, totalCap = 0;
+  for (var i = 0; i < STANDS.length; i++) {
+    var s = STANDS[i];
+    var smax = s.max || 4;
+    for (var j = 0; j < s.slots.length; j++) {
+      totalCap += smax;
+      var n = getCount(s.id + ":" + s.slots[j]);
+      total += n;
+      if (n >= smax) full++;
+    }
+  }
+  document.getElementById("statTotal").textContent = total;
+  document.getElementById("statFull").textContent = full;
+  document.getElementById("statLeft").textContent = totalCap - total;
+}
+
+function refreshAll() {
+  return Promise.all([loadCounts(), loadAdoCounts()]).then(function() {
+    renderNav(); renderSlots();
+  });
+}
+
+/* ---- Enfants multiples ---- */
+function addChildRow() {
+  var container = document.getElementById("childrenFields");
+  var rows = container.querySelectorAll("[data-child]");
+  var idx = rows.length + 1;
+  if (idx >= 4) document.getElementById("btnAddChild").style.display = "none";
+  var div = document.createElement("div");
+  div.setAttribute("data-child", "1");
+  div.style.cssText = "display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;position:relative";
+  div.innerHTML = '<div class="field" style="margin-bottom:0"><label>Nom de l\'enfant ' + (idx + 1) + '</label><input class="fChild" placeholder="Paul Dupont"/></div>'
+    + '<div class="field" style="margin-bottom:0"><label>Classe + enseignant(e)</label><input class="fClass" placeholder="CP \u2014 M. Bernard"/></div>'
+    + '<button type="button" onclick="removeChildRow(this)" style="position:absolute;top:0;right:-22px;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:2px">\u2715</button>';
+  container.appendChild(div);
+}
+
+function removeChildRow(btn) {
+  btn.closest("[data-child]").remove();
+  document.getElementById("btnAddChild").style.display = "block";
+}
+
+function getChildrenFromForm() {
+  var childs = document.querySelectorAll(".fChild");
+  var klasses = document.querySelectorAll(".fClass");
+  var result = [];
+  for (var i = 0; i < childs.length; i++) {
+    var cv = childs[i].value.trim();
+    var kv = klasses[i] ? klasses[i].value.trim() : "";
+    if (cv || kv) result.push({child: cv, klass: kv});
+  }
+  return result;
+}
+
+function resetChildrenFields(children) {
+  var container = document.getElementById("childrenFields");
+  var extras = container.querySelectorAll("[data-child]");
+  for (var i = 0; i < extras.length; i++) extras[i].remove();
+  var fc = container.querySelector(".fChild");
+  var fk = container.querySelector(".fClass");
+  if (fc) fc.value = (children[0] && children[0].child) || "";
+  if (fk) fk.value = (children[0] && children[0].klass) || "";
+  document.getElementById("btnAddChild").style.display = "block";
+}
+
+/* ---- Identité ---- */
+function ikey(email, name) {
+  return email.trim().toLowerCase() + "||" + name.trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function getSlotsByIdentity(email, name) {
+  var k = ikey(email, name);
+  return sbGet("inscriptions?email=eq." + encodeURIComponent(email.trim().toLowerCase()) + "&select=stand_id,slot,code,id")
+    .then(function(rows) {
+      if (!Array.isArray(rows)) return [];
+      return rows.filter(function(r) {
+        return ikey(r.email || email, r.name || name) === k || true; // email already filtered
+      });
+    });
+}
+
+/* ---- Vérifications ---- */
+function checkConflict() {
+  var email = document.getElementById("fEmail").value.trim();
+  var name = document.getElementById("fName").value.trim();
+  var isAdo = document.getElementById("fIsAdo").checked;
+  var slot = formTarget ? formTarget.split(":")[1] : "";
+  var el = document.getElementById("conflictMsg");
+  var btn = document.getElementById("btnSubmit");
+  el.style.display = "none"; btn.disabled = false;
+  if (!email || email.indexOf("@") < 0 || !name || !slot) return;
+  // Limite ados
+  if (isAdo && formTarget) {
+    var adoCount = getAdoCount(formTarget);
+    if (adoCount >= MAX_ADO) {
+      el.innerHTML = "<strong>Limite ados atteinte :</strong> ce cr\u00e9neau a d\u00e9j\u00e0 " + MAX_ADO + " adolescent(e)s inscrit(e)s.";
+      el.className = "msg warn"; el.style.display = "block"; btn.disabled = true;
+    }
+  }
+  // Vérif doublon horaire via Supabase
+  sbGet("inscriptions?email=eq." + encodeURIComponent(email.toLowerCase()) + "&slot=eq." + encodeURIComponent(slot) + "&select=stand_id,name")
+    .then(function(rows) {
+      if (!Array.isArray(rows)) return;
+      for (var i = 0; i < rows.length; i++) {
+        if (ikey(email, rows[i].name) === ikey(email, name)) {
+          var standName = "";
+          for (var j = 0; j < STANDS.length; j++) { if (STANDS[j].id === rows[i].stand_id) { standName = STANDS[j].name; break; } }
+          el.innerHTML = "<strong>Conflit horaire :</strong> " + esc(name) + " est d\u00e9j\u00e0 inscrit(e) sur le cr\u00e9neau <strong>" + slot + "</strong> au stand <strong>" + esc(standName) + "</strong>.";
+          el.className = "msg warn"; el.style.display = "block";
+          document.getElementById("btnSubmit").disabled = true;
+          return;
+        }
+      }
+    });
+}
+
+function onIdentityInput() {
+  var email = document.getElementById("fEmail").value.trim();
+  var name = document.getElementById("fName").value.trim();
+  if (email.indexOf("@") >= 0 && name.length > 2) {
+    sbGet("inscriptions?email=eq." + encodeURIComponent(email.toLowerCase()) + "&name=eq." + encodeURIComponent(name) + "&limit=1&select=phone,children")
+      .then(function(rows) {
+        if (!Array.isArray(rows) || !rows.length) return;
+        var v = rows[0];
+        if (!document.getElementById("fPhone").value && v.phone) document.getElementById("fPhone").value = v.phone;
+        if (v.children && v.children.length) {
+          var fc = document.querySelector(".fChild");
+          var fk = document.querySelector(".fClass");
+          if (fc && !fc.value) fc.value = v.children[0].child || "";
+          if (fk && !fk.value) fk.value = v.children[0].klass || "";
+        }
+      });
+  }
+  checkConflict();
+}
+
+/* ---- Modal inscription ---- */
+function openInscription(key, standName, slot) {
+  formTarget = key;
+  document.getElementById("modalTitle").textContent = standName;
+  document.getElementById("modalSub").textContent = "Cr\u00e9neau " + slot;
+  document.getElementById("errMsg").style.display = "none";
+  document.getElementById("conflictMsg").style.display = "none";
+  document.getElementById("btnSubmit").disabled = false;
+  document.getElementById("fIsAdo").checked = false;
+  document.getElementById("formScreen").style.display = "block";
+  document.getElementById("confirmScreen").classList.remove("show");
+  document.getElementById("fName").value = prefillData.name || "";
+  document.getElementById("fEmail").value = prefillData.email || "";
+  document.getElementById("fPhone").value = prefillData.phone || "";
+  resetChildrenFields(prefillData.children || [{child:"",klass:""}]);
+  if (prefillData.name && prefillData.email) checkConflict();
+  document.getElementById("overlayInscription").classList.add("open");
+  setTimeout(function() { document.getElementById("fName").focus(); }, 100);
+}
+
+function closeInscription() {
+  document.getElementById("overlayInscription").classList.remove("open");
+  formTarget = null;
+}
+
+function genCode() {
+  var c = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  var s = "";
+  for (var i = 0; i < 6; i++) s += c[Math.floor(Math.random() * c.length)];
+  return s;
+}
+
+function submitForm() {
+  var name     = document.getElementById("fName").value.trim();
+  var isAdo    = document.getElementById("fIsAdo").checked;
+  var children = getChildrenFromForm();
+  var phone    = document.getElementById("fPhone").value.trim();
+  var email    = document.getElementById("fEmail").value.trim();
+  if (!name || !children.length || !children[0].child || !children[0].klass || !phone || !email) {
+    showMsg("errMsg", "error", "Merci de remplir tous les champs obligatoires."); return;
+  }
+  if (email.indexOf("@") < 0) { showMsg("errMsg", "error", "Adresse e-mail invalide."); return; }
+  var btn = document.getElementById("btnSubmit");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Enregistrement...';
+  var standId = formTarget.split(":")[0];
+  var slot    = formTarget.split(":")[1];
+  var code    = genCode();
+  var ftStand = null;
+  for (var si = 0; si < STANDS.length; si++) { if (STANDS[si].id === standId) { ftStand = STANDS[si]; break; } }
+  var ftMax = ftStand ? ftStand.max : 4;
+  // Vérif capacité + doublon + ado en parallèle
+  Promise.all([
+    sbGet("inscriptions?stand_id=eq." + standId + "&slot=eq." + encodeURIComponent(slot) + "&select=id,name,email,is_ado"),
+  ]).then(function(results) {
+    var existing = results[0];
+    if (!Array.isArray(existing)) existing = [];
+    // Capacité
+    if (existing.length >= ftMax) {
+      showMsg("errMsg", "error", "Ce cr\u00e9neau est d\u00e9j\u00e0 complet."); resetBtn(); return;
+    }
+    // Doublon horaire
+    for (var i = 0; i < existing.length; i++) {
+      if (ikey(existing[i].email, existing[i].name) === ikey(email, name)) {
+        showMsg("errMsg", "warn", esc(name) + " est d\u00e9j\u00e0 inscrit(e) sur ce cr\u00e9neau."); resetBtn(); return;
+      }
+    }
+    // Doublon horaire même slot autres stands
+    return sbGet("inscriptions?email=eq." + encodeURIComponent(email.toLowerCase()) + "&slot=eq." + encodeURIComponent(slot) + "&select=stand_id,name")
+      .then(function(sameSlot) {
+        if (Array.isArray(sameSlot)) {
+          for (var j = 0; j < sameSlot.length; j++) {
+            if (ikey(email, sameSlot[j].name) === ikey(email, name)) {
+              var sn = ""; for (var k = 0; k < STANDS.length; k++) { if (STANDS[k].id === sameSlot[j].stand_id) { sn = STANDS[k].name; break; } }
+              showMsg("errMsg", "warn", esc(name) + " est d\u00e9j\u00e0 inscrit(e) sur le cr\u00e9neau " + slot + " (" + esc(sn) + ")."); resetBtn(); return;
+            }
+          }
+        }
+        // Limite ados
+        if (isAdo) {
+          var adoCount = 0;
+          for (var ai = 0; ai < existing.length; ai++) { if (existing[ai].is_ado) adoCount++; }
+          if (adoCount >= MAX_ADO) { showMsg("errMsg", "warn", "Ce cr\u00e9neau a d\u00e9j\u00e0 " + MAX_ADO + " adolescent(e)s."); resetBtn(); return; }
+        }
+        // Enregistrement
+        return sbPost("inscriptions", {
+          stand_id: standId, slot: slot, name: name, is_ado: isAdo,
+          children: children, phone: phone, email: email.toLowerCase(), code: code
+        }).then(function(res) {
+          if (res && res.code === "23505") { showMsg("errMsg", "error", "Code de confirmation d\u00e9j\u00e0 utilis\u00e9, r\u00e9essayez."); resetBtn(); return; }
+          prefillData = {email: email, name: name, children: children, phone: phone};
+          // Mise à jour cache local
+          var ckey = standId + ":" + slot;
+          countCache[ckey] = (countCache[ckey] || 0) + 1;
+          if (isAdo) { if (!window.adoCache) window.adoCache = {}; window.adoCache[ckey] = (window.adoCache[ckey] || 0) + 1; }
+          renderNav(); renderSlots();
+          var sName = ftStand ? ftStand.name : "";
+          var childLines = "";
+          for (var ci = 0; ci < children.length; ci++) {
+            childLines += "<div><strong>Enfant" + (children.length > 1 ? " " + (ci+1) : "") + " :</strong> " + esc(children[ci].child) + " \u2014 " + esc(children[ci].klass) + "</div>";
+          }
+          document.getElementById("confirmList").innerHTML =
+            "<div><strong>Stand :</strong> " + esc(sName) + " \u2014 " + slot + "</div>"
+            + "<div><strong>B\u00e9n\u00e9vole :</strong> " + esc(name) + (isAdo ? ' <span style="background:var(--warn-bg);color:var(--warn);font-size:11px;padding:2px 8px;border-radius:10px">Ado</span>' : '') + "</div>"
+            + childLines
+            + "<div><strong>T\u00e9l\u00e9phone :</strong> " + esc(phone) + "</div>"
+            + "<div><strong>E-mail :</strong> " + esc(email) + "</div>";
+          document.getElementById("confirmCode").textContent = code;
+          document.getElementById("formScreen").style.display = "none";
+          document.getElementById("confirmScreen").classList.add("show");
+        });
+      });
+  }).catch(function() { showMsg("errMsg", "error", "Erreur r\u00e9seau, veuillez r\u00e9essayer."); resetBtn(); });
+}
+
+function resetBtn() {
+  var btn = document.getElementById("btnSubmit");
+  btn.disabled = false; btn.textContent = "Confirmer l'inscription";
+}
+
+function showMsg(id, type, msg) {
+  var el = document.getElementById(id);
+  el.textContent = msg; el.className = "msg " + type; el.style.display = "block";
+}
+
+/* ---- Modal "Mes inscriptions" ---- */
+function openMyAccount() {
+  document.getElementById("accountEmail").value = prefillData.email || "";
+  document.getElementById("accountStep1").style.display = "block";
+  document.getElementById("accountStep2").style.display = "none";
+  document.getElementById("accountErr").style.display = "none";
+  document.getElementById("btnFindEmail").style.display = "block";
+  document.getElementById("overlayAccount").classList.add("open");
+  setTimeout(function() { document.getElementById("accountEmail").focus(); }, 100);
+}
+function closeAccount() { document.getElementById("overlayAccount").classList.remove("open"); }
+function closeAccountAndPrefill() {
+  var email = document.getElementById("accountEmail").value.trim();
+  if (email) prefillData.email = email;
+  closeAccount();
+}
+
+function findByEmail() {
+  var email = document.getElementById("accountEmail").value.trim();
+  if (!email || email.indexOf("@") < 0) { showMsg("accountErr", "error", "Saisissez une adresse e-mail valide."); return; }
+  var btn = document.getElementById("btnFindEmail");
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Recherche...';
+  sbGet("inscriptions?email=eq." + encodeURIComponent(email.toLowerCase()) + "&select=id,stand_id,slot,name,is_ado,children,code")
+    .then(function(rows) {
+      btn.disabled = false; btn.textContent = "Voir mes inscriptions";
+      if (!Array.isArray(rows) || !rows.length) { showMsg("accountErr", "error", "Aucune inscription trouv\u00e9e pour cet e-mail."); return; }
+      prefillData.email = email;
+      // Grouper par nom
+      var persons = {};
+      for (var i = 0; i < rows.length; i++) {
+        var r = rows[i];
+        var k = r.name.toLowerCase();
+        if (!persons[k]) persons[k] = {name: r.name, slots: []};
+        var sName = "";
+        for (var j = 0; j < STANDS.length; j++) { if (STANDS[j].id === r.stand_id) { sName = STANDS[j].name; break; } }
+        var childStr = "";
+        if (r.children && r.children.length) {
+          var parts = [];
+          for (var ci = 0; ci < r.children.length; ci++) { parts.push(r.children[ci].child + (r.children[ci].klass ? " (" + r.children[ci].klass + ")" : "")); }
+          childStr = parts.join(", ");
+        }
+        persons[k].slots.push({stand: sName, slot: r.slot, code: r.code, isAdo: r.is_ado, childStr: childStr, id: r.id});
+      }
+      var html = "";
+      for (var pk in persons) {
+        var p = persons[pk];
+        var rowsHtml = "";
+        for (var si = 0; si < p.slots.length; si++) {
+          var sl = p.slots[si];
+          rowsHtml += '<div class="my-slot-row">'
+            + '<div class="my-slot-info">'
+            + '<div class="my-slot-stand">' + esc(sl.stand) + (sl.isAdo ? ' <span class="badge-ado" style="font-size:10px;padding:1px 6px">Ado</span>' : '') + '</div>'
+            + '<div class="my-slot-time">' + sl.slot + '</div>'
+            + (sl.childStr ? '<div class="my-slot-meta">' + esc(sl.childStr) + '</div>' : '')
+            + '<div class="my-slot-code">Code : ' + sl.code + '</div>'
+            + '</div>'
+            + '<button class="btn-unsub" onclick="unsubById(\'' + sl.id + '\',\'' + sl.stand + '\',\'' + esc2(email) + '\')">Annuler</button>'
+            + '</div>';
+        }
+        html += '<div class="person-section"><div class="person-header">\uD83D\uDC64 ' + esc(p.name) + '</div><div class="my-slots-list">' + rowsHtml + '</div></div>';
+      }
+      document.getElementById("familySlots").innerHTML = html;
+      document.getElementById("accountStep1").style.display = "none";
+      document.getElementById("accountStep2").style.display = "block";
+      document.getElementById("btnFindEmail").style.display = "none";
+    })
+    .catch(function() { btn.disabled = false; btn.textContent = "Voir mes inscriptions"; showMsg("accountErr", "error", "Erreur r\u00e9seau, veuillez r\u00e9essayer."); });
+}
+
+function unsubById(id, standName, email) {
+  if (!confirm("Annuler l'inscription au stand " + standName + " ?")) return;
+  sbDelete("inscriptions", "id=eq." + id).then(function() {
+    // Rafraîchir
+    refreshAll().then(function() {
+      document.getElementById("accountEmail").value = email;
+      document.getElementById("accountStep1").style.display = "block";
+      document.getElementById("accountStep2").style.display = "none";
+      document.getElementById("btnFindEmail").style.display = "block";
+      findByEmail();
+    });
+  });
+}
+
+function esc(s) { return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function esc2(s) { return String(s || "").replace(/\\/g,"\\\\").replace(/'/g,"\\'"); }
+
+document.getElementById("overlayInscription").addEventListener("click", function(e) { if (e.target === this) closeInscription(); });
+document.getElementById("overlayAccount").addEventListener("click", function(e) { if (e.target === this) closeAccount(); });
+document.getElementById("accountEmail").addEventListener("keydown", function(e) { if (e.key === "Enter") findByEmail(); });
+document.addEventListener("keydown", function(e) { if (e.key === "Escape") { closeInscription(); closeAccount(); } });
+
+// Chargement initial
+renderNav();
+refreshAll();
+// Rafraîchissement automatique toutes les 30 secondes
+setInterval(refreshAll, 30000);
+</script>
+</body>
+</html>
