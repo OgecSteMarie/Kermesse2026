@@ -6,21 +6,21 @@
 <title>Admin — Kermesse Bénévoles</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F7F4EF;--card:#FFF;--accent:#D4553A;--accent2:#2B4A3F;--text:#1A1A1A;--text-soft:#666;--text-muted:#999;--border:#E2DDD6;--success-bg:#EAF3E8;--success:#2E7D32;--full-bg:#FDECEA;--full:#C62828;--warn-bg:#FFF8E1;--warn:#E65100;--radius:12px}
+:root{--bg:#FDF8F5;--card:#FFF;--accent:#E54111;--accent2:#69174C;--text:#1A1A1A;--text-soft:#555;--text-muted:#888;--border:#E8DDE8;--success-bg:#F2F7D4;--success:#3a7a0a;--full-bg:#FCEAF4;--full:#B6107C;--warn-bg:#FEF3E2;--warn:#C47000;--info-bg:#E0F7F7;--info:#007A79;--radius:12px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
 .login-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:2.5rem 2rem;width:100%;max-width:360px;text-align:center}
 .login-card .lock{font-size:36px;margin-bottom:1rem}
-.login-card h1{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--accent2);margin-bottom:6px}
+.login-card h1{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:#69174C;margin-bottom:6px}
 .login-card p{font-size:13px;color:var(--text-muted);margin-bottom:1.5rem}
 .login-card input{width:100%;font-family:'DM Sans',sans-serif;font-size:15px;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;text-align:center;letter-spacing:.1em;margin-bottom:10px;transition:border-color .15s}
-.login-card input:focus{border-color:var(--accent2);background:white}
-.btn-login{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;border-radius:8px;border:none;background:var(--accent2);color:white;cursor:pointer;transition:opacity .15s}
+.login-card input:focus{border-color:#69174C;background:white}
+.btn-login{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;border-radius:8px;border:none;background:#69174C;color:white;cursor:pointer;transition:opacity .15s}
 .btn-login:hover{opacity:.88}
 .login-err{font-size:12px;color:var(--full);margin-top:8px;display:none}
 .app{display:none}
-.topbar{background:var(--accent2);color:white;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.topbar{background:#69174C;color:white;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .topbar-left h1{font-family:'Playfair Display',serif;font-size:20px;font-weight:600}
 .topbar-left p{font-size:12px;opacity:.7;margin-top:2px}
 .topbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -30,60 +30,60 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .btn-top.danger:hover{background:rgba(212,85,58,0.2)}
 .btn-logout{font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.6);cursor:pointer}
 .btn-logout:hover{color:white;border-color:rgba(255,255,255,0.4)}
-.live-dot{display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
+.live-dot{display:inline-block;width:8px;height:8px;background:#C0D232;border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .stats-row{display:flex;gap:1px;background:var(--border);border-bottom:1px solid var(--border)}
 .stat-item{flex:1;background:var(--card);padding:.9rem .5rem;text-align:center}
-.stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--accent2);display:block}
+.stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:#69174C;display:block}
 .stat-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
 .main{max-width:1050px;margin:0 auto;padding:1.5rem 1rem 4rem}
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem;align-items:center}
 .filter-label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-right:4px}
 .filter-chip{font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-soft);cursor:pointer;transition:all .15s}
-.filter-chip:hover{border-color:var(--accent2);color:var(--accent2)}
-.filter-chip.active{background:var(--accent2);color:white;border-color:var(--accent2)}
+.filter-chip:hover{border-color:#69174C;color:#69174C}
+.filter-chip.active{background:#69174C;color:white;border-color:#69174C}
 .search-box{margin-left:auto}
 .search-box input{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);outline:none;width:200px;transition:border-color .15s}
-.search-box input:focus{border-color:var(--accent2)}
+.search-box input:focus{border-color:#69174C}
 .table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
 table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card)}
-th{background:var(--accent2);color:white;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;padding:9px 12px;text-align:left;white-space:nowrap;cursor:pointer;user-select:none}
-th:hover{background:#1e3a31}
+th{background:#69174C;color:white;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;padding:9px 12px;text-align:left;white-space:nowrap;cursor:pointer;user-select:none}
+th:hover{background:#85205F}
 td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#F9F8F6}
-.badge-ado{font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;background:var(--warn-bg);color:var(--warn)}
+.badge-ado{font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;background:#FEE8D0;color:#C05000}
 .btn-del{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:3px 6px;border-radius:4px}
-.btn-del:hover{color:var(--full);background:var(--full-bg)}
+.btn-del:hover{color:#B6107C;background:#FCEAF4}
 .empty-row td{text-align:center;color:var(--text-muted);padding:2rem;font-style:italic}
 .summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .summary-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:12px 14px}
-.summary-card h3{font-size:13px;font-weight:500;color:var(--accent2);margin-bottom:8px}
+.summary-card h3{font-size:13px;font-weight:500;color:#69174C;margin-bottom:8px}
 .slot-line{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:3px 0;border-bottom:1px solid #F0EDE8;color:var(--text-soft)}
 .slot-line:last-child{border:none}
 .badge-small{font-size:10px;font-weight:500;padding:2px 8px;border-radius:10px}
-.badge-ok{background:var(--success-bg);color:var(--success)}
-.badge-full{background:var(--full-bg);color:var(--full)}
+.badge-ok{background:#F2F7D4;color:#3a7a0a}
+.badge-full{background:#FCEAF4;color:#B6107C}
 .view-tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
 .view-tab{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-soft);cursor:pointer;transition:all .15s}
-.view-tab.active{background:var(--accent2);color:white;border-color:var(--accent2)}
+.view-tab.active{background:#69174C;color:white;border-color:#69174C}
 .section{display:none}.section.show{display:block}
 .overlay{display:none;position:fixed;inset:0;background:rgba(26,26,26,0.5);z-index:200;align-items:center;justify-content:center;padding:1rem}
 .overlay.open{display:flex}
 .modal{background:var(--card);border-radius:var(--radius);width:100%;max-width:440px;overflow:hidden;animation:slideUp .2s ease;max-height:90vh;overflow-y:auto}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-head{background:var(--accent2);color:white;padding:1.1rem 1.25rem;position:sticky;top:0}
+.modal-head{background:#69174C;color:white;padding:1.1rem 1.25rem;position:sticky;top:0}
 .modal-head h2{font-family:'Playfair Display',serif;font-size:17px;font-weight:600}
 .modal-head p{font-size:13px;opacity:.75;margin-top:2px}
 .modal-body{padding:1.25rem}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:5px}
 .field input,.field select{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;transition:border-color .15s}
-.field input:focus,.field select:focus{border-color:var(--accent2);background:white}
+.field input:focus,.field select:focus{border-color:#69174C;background:white}
 .msg-form{font-size:12px;padding:9px 12px;border-radius:6px;display:none;margin-top:8px}
-.msg-form.error{background:var(--full-bg);color:var(--full)}
-.msg-form.warn{background:var(--warn-bg);color:var(--warn)}
-.msg-form.success{background:var(--success-bg);color:var(--success)}
+.msg-form.error{background:#FCEAF4;color:#B6107C}
+.msg-form.warn{background:#FFF3E0;color:#C05000}
+.msg-form.success{background:#F2F7D4;color:#3a7a0a}
 .modal-footer{display:flex;gap:8px;padding:0 1.25rem 1.25rem}
 .btn-confirm{flex:1;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;border-radius:8px;border:none;background:var(--accent2);color:white;cursor:pointer}
 .btn-confirm:hover{opacity:.88}
@@ -92,9 +92,9 @@ tr:hover td{background:#F9F8F6}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .confirm-box{display:none;padding:.75rem 1.25rem 1.25rem}
-.confirm-box h3{font-size:15px;font-weight:500;color:var(--accent2);margin-bottom:8px}
+.confirm-box h3{font-size:15px;font-weight:500;color:#69174C;margin-bottom:8px}
 .confirm-detail{font-size:13px;background:#F4F8F4;border-radius:8px;padding:10px 14px}
-.confirm-detail div{padding:3px 0;border-bottom:1px solid #E8EDE8}
+.confirm-detail div{padding:3px 0;border-bottom:1px solid #F0E0EC}
 .confirm-detail div:last-child{border:none}
 @media(max-width:600px){.topbar{flex-direction:column;align-items:flex-start}.search-box input{width:140px}}
 </style>
@@ -186,7 +186,7 @@ tr:hover td{background:#F9F8F6}
     <div class="section" id="viewSettings">
       <div style="max-width:520px">
         <div style="background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-bottom:1rem">
-          <h3 style="font-family:Playfair Display,serif;font-size:16px;font-weight:600;color:var(--accent2);margin-bottom:6px">Clôture des inscriptions</h3>
+          <h3 style="font-family:Playfair Display,serif;font-size:16px;font-weight:600;color:#69174C;margin-bottom:6px">Clôture des inscriptions</h3>
           <p style="font-size:13px;color:var(--text-soft);margin-bottom:12px">Après cette date et heure, les familles ne pourront plus s'inscrire. Laissez vide pour ne pas bloquer.</p>
           <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
             <input type="datetime-local" id="closeInscDate" style="font-family:inherit;font-size:14px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;flex:1;min-width:200px"/>
@@ -196,7 +196,7 @@ tr:hover td{background:#F9F8F6}
           <div id="closeInscStatus" style="font-size:12px;margin-top:8px;color:var(--text-muted)"></div>
         </div>
         <div style="background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-bottom:1rem">
-          <h3 style="font-family:Playfair Display,serif;font-size:16px;font-weight:600;color:var(--accent2);margin-bottom:6px">Clôture des désinscriptions</h3>
+          <h3 style="font-family:Playfair Display,serif;font-size:16px;font-weight:600;color:#69174C;margin-bottom:6px">Clôture des désinscriptions</h3>
           <p style="font-size:13px;color:var(--text-soft);margin-bottom:12px">Après cette date et heure, les familles ne pourront plus annuler. Peut être différente de la clôture des inscriptions.</p>
           <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
             <input type="datetime-local" id="closeDesinscDate" style="font-family:inherit;font-size:14px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;flex:1;min-width:200px"/>
@@ -205,7 +205,7 @@ tr:hover td{background:#F9F8F6}
           </div>
           <div id="closeDesinscStatus" style="font-size:12px;margin-top:8px;color:var(--text-muted)"></div>
         </div>
-        <div style="background:var(--warn-bg);border:1px solid #FFD180;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--warn)">
+        <div style="background:#FFF3E0;border:1px solid #EF7A1D;border-radius:8px;padding:10px 14px;font-size:12px;color:#C05000">
           <strong>Note :</strong> les changements s'appliquent immédiatement à la page publique, sans rechargement nécessaire.
         </div>
       </div>
@@ -217,7 +217,7 @@ tr:hover td{background:#F9F8F6}
 <!-- Modal ajout responsable -->
 <div class="overlay" id="overlayAddResp">
   <div class="modal">
-    <div class="modal-head" style="background:var(--accent)">
+    <div class="modal-head" style="background:#E54111">
       <h2>Ajouter un responsable</h2>
       <p>Hors quota bénévoles — tous les créneaux du stand</p>
     </div>
@@ -253,10 +253,11 @@ tr:hover td{background:#F9F8F6}
 var SUPABASE_URL = "https://rwieiemshitqcvzjzvgy.supabase.co";
 var SUPABASE_KEY = "sb_publishable_m917FPsrdzKkvYneAVg2uw_oTXKau9I";
 // ===== MOT DE PASSE ADMIN — modifiez ici =====
-var PASSWORD = "Kermesse2026";
+var PASSWORD = "kermesse2026";
 // =============================================
 
 var STANDS = [
+  {id:"install",    name:"Installation / D\u00e9sinstallation",    slots:["Vendredi soir (\u00e0 partir de 17h15)","Samedi matin (\u00e0 partir de 9h)","Dimanche matin (\u00e0 partir de 9h)"], max:999},
   {id:"defile",    name:"D\u00e9fil\u00e9",                          slots:["14h\u201315h"],                                                    max:15},
   {id:"bar",       name:"Bar",                                        slots:["16h\u201317h","17h\u201318h","18h\u201319h","19h\u201320h"],        max:4},
   {id:"laser",     name:"Tir laser biathlon",                         slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
@@ -414,7 +415,7 @@ function renderTable() {
       + '<td style="text-align:center">' + (r.is_ado ? '<span class="badge-ado">Ado</span>' : '') + '</td>'
       + '<td>' + esc(r.childStr) + '</td>'
       + '<td>' + esc(r.phone) + '</td>'
-      + '<td><a href="mailto:' + esc(r.email) + '" style="color:var(--accent2)">' + esc(r.email) + '</a></td>'
+      + '<td><a href="mailto:' + esc(r.email) + '" style="color:#69174C">' + esc(r.email) + '</a></td>'
       + '<td style="font-family:monospace;font-size:12px;color:var(--accent)">' + esc(r.code) + '</td>'
       + '<td style="color:var(--text-muted);font-size:12px">' + dt + '</td>'
       + '<td><button class="btn-del" onclick="deleteRow(\'' + r.id + '\')">✕</button></td>'
@@ -455,7 +456,7 @@ function renderResp() {
     var dt = v.created_at ? new Date(v.created_at).toLocaleString("fr-FR") : "";
     html += '<tr><td>' + esc(v.stand_name) + '</td><td><strong>' + esc(v.name) + '</strong></td>'
       + '<td>' + esc(v.phone) + '</td>'
-      + '<td><a href="mailto:' + esc(v.email) + '" style="color:var(--accent2)">' + esc(v.email) + '</a></td>'
+      + '<td><a href="mailto:' + esc(v.email) + '" style="color:#69174C">' + esc(v.email) + '</a></td>'
       + '<td style="color:var(--text-muted);font-size:12px">' + dt + '</td>'
       + '<td><button class="btn-del" onclick="deleteResp(\'' + v.id + '\')">✕</button></td></tr>';
   }

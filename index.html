@@ -2,52 +2,53 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Inscriptions Bénévoles — Kermesse</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F7F4EF;--card:#FFF;--accent:#D4553A;--accent2:#2B4A3F;--text:#1A1A1A;--text-soft:#666;--text-muted:#999;--border:#E2DDD6;--success-bg:#EAF3E8;--success:#2E7D32;--full-bg:#FDECEA;--full:#C62828;--warn-bg:#FFF8E1;--warn:#E65100;--info-bg:#EEF4FF;--info:#1A56C4;--radius:12px}
+:root{--bg:#FDF8F5;--card:#FFF;--accent:#E54111;--accent2:#69174C;--text:#1A1A1A;--text-soft:#555;--text-muted:#888;--border:#E8DDE8;--success-bg:#F2F7D4;--success:#3a7a0a;--full-bg:#FCEAF4;--full:#B6107C;--warn-bg:#FEF3E2;--warn:#C47000;--info-bg:#E0F7F7;--info:#007A79;--radius:12px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
-.hero{background:var(--accent2);color:white;padding:2.5rem 2rem 2rem;text-align:center;position:relative;overflow:hidden}
+.hero{background:#69174C;color:white;padding:2.5rem 2rem 2rem;text-align:center;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.04)}
 .hero::after{content:'';position:absolute;bottom:-40px;left:-40px;width:140px;height:140px;border-radius:50%;background:rgba(212,85,58,0.15)}
-.hero-tag{display:inline-block;background:var(--accent);color:white;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px}
+.hero-tag{display:inline-block;background:#EF7A1D;color:white;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,36px);font-weight:700;line-height:1.2;margin-bottom:8px}
 .hero p{font-size:14px;opacity:.75;max-width:420px;margin:0 auto}
 .stats-row{display:flex;gap:1px;background:var(--border);border-bottom:1px solid var(--border)}
 .stat-item{flex:1;background:var(--card);padding:.9rem .5rem;text-align:center}
-.stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--accent2);display:block}
+.stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:#69174C;display:block}
 .stat-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
 .main{max-width:820px;margin:0 auto;padding:1.5rem 1rem 4rem}
 .steps-box{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1rem 1.25rem;margin-bottom:1.5rem}
-.steps-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--accent2);margin-bottom:.75rem}
+.steps-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:#69174C;margin-bottom:.75rem}
 .step-row{display:flex;gap:10px;align-items:flex-start;font-size:13px;margin-bottom:6px}
-.step-num{background:var(--accent2);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px}
+.step-num{background:#00ACAB;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px}
 .top-actions{display:flex;gap:8px;justify-content:flex-end;margin-bottom:1.25rem}
 .btn-action{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-soft);cursor:pointer;transition:all .15s}
-.btn-action:hover{border-color:var(--accent2);color:var(--accent2)}
-.stands-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem}
-.stand-chip{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-soft);cursor:pointer;transition:all .15s;white-space:nowrap}
-.stand-chip:hover{border-color:var(--accent2);color:var(--accent2)}
-.stand-chip.active{background:var(--accent2);color:white;border-color:var(--accent2);font-weight:500}
-.stand-chip.has-full{border-color:var(--accent)}
-.panel-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;margin-bottom:1rem;color:var(--accent2)}
+.btn-action:hover{border-color:#69174C;color:#69174C}
+.stands-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+.stand-chip{font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-soft);cursor:pointer;transition:all .15s;white-space:nowrap}
+.stand-chip:hover{border-color:#69174C;color:#69174C}
+.stand-chip.active{background:#69174C;color:white;border-color:#69174C;font-weight:500}
+.stand-chip.has-full{border-color:#EF7A1D}
+.panel-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;margin-bottom:1rem;color:#69174C}
+@keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 .slots-grid{display:flex;flex-direction:column;gap:10px}
 .slot-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
 .slot-head{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border);background:#FAFAF8;flex-wrap:wrap;gap:6px}
 .slot-time{font-weight:500;font-size:14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
-.badge-ok{background:var(--success-bg);color:var(--success)}
-.badge-full{background:var(--full-bg);color:var(--full)}
-.badge-ado{font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;background:var(--warn-bg);color:var(--warn)}
+.badge-ok{background:#F2F7D4;color:#3a7a0a}
+.badge-full{background:#FCEAF4;color:#B6107C}
+.badge-ado{font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;background:#FEE8D0;color:#C05000}
 .slot-body{padding:10px 16px 12px}
 .spots-row{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap}
 .spot{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px}
-.spot.taken{background:#F0F0EE;border-color:#D8D4CC}
-.spot.free{background:var(--success-bg);border-color:#C5DFC2}
-.btn-add{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px;border-radius:8px;border:1.5px dashed var(--border);background:transparent;color:var(--accent2);cursor:pointer;transition:all .15s}
-.btn-add:hover{background:var(--accent2);color:white;border-style:solid;border-color:var(--accent2)}
+.spot.taken{background:#F5EAF2;border-color:#D4A8C8}
+.spot.free{background:#EDF5A0;border-color:#A8BE1A}
+.btn-add{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:12px 8px;border-radius:8px;border:1.5px dashed var(--border);background:transparent;color:#69174C;cursor:pointer;transition:all .15s;min-height:44px}
+.btn-add:hover{background:var(--accent2);color:white;border-style:solid;border-color:#69174C}
 .btn-add:disabled{opacity:.4;cursor:default}
 .btn-add:disabled:hover{background:transparent;color:var(--text-muted);border-style:dashed;border-color:var(--border)}
 .loading-bar{text-align:center;padding:2rem;color:var(--text-muted);font-size:13px}
@@ -55,44 +56,44 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .overlay.open{display:flex}
 .modal{background:var(--card);border-radius:var(--radius);width:100%;max-width:480px;overflow:hidden;animation:slideUp .2s ease;max-height:92vh;overflow-y:auto}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-head{background:var(--accent2);color:white;padding:1.1rem 1.25rem;position:sticky;top:0;z-index:1}
+.modal-head{background:#69174C;color:white;padding:1.1rem 1.25rem;position:sticky;top:0;z-index:1}
 .modal-head h2{font-family:'Playfair Display',serif;font-size:17px;font-weight:600}
 .modal-head p{font-size:13px;opacity:.75;margin-top:2px}
 .modal-body{padding:1.25rem}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:5px}
-.field input{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;transition:border-color .15s}
-.field input:focus{border-color:var(--accent2);background:white}
+.field input{width:100%;font-family:'DM Sans',sans-serif;font-size:16px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:#FAFAF8;color:var(--text);outline:none;transition:border-color .15s}
+.field input:focus{border-color:#69174C;background:white}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ado-check{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:8px 12px;background:var(--warn-bg);border:1px solid #FFD180;border-radius:8px}
-.ado-check input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent2);cursor:pointer;flex-shrink:0}
+.ado-check{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:8px 12px;background:#FFF3E0;border:1px solid #EF7A1D;border-radius:8px}
+.ado-check input[type=checkbox]{width:16px;height:16px;accent-color:#00ACAB;cursor:pointer;flex-shrink:0}
 .ado-check label{font-size:13px;color:var(--warn);cursor:pointer;font-weight:500;margin:0}
 .msg{font-size:12px;margin-top:8px;padding:9px 12px;border-radius:6px;display:none;line-height:1.5}
 .msg.error{background:var(--full-bg);color:var(--full)}
-.msg.warn{background:var(--warn-bg);color:var(--warn);border:1px solid #FFD180}
-.msg.info{background:var(--info-bg);color:var(--info)}
+.msg.warn{background:#FFF3E0;color:#C05000;border:1px solid #EF7A1D}
+.msg.info{background:#E0F7F7;color:#007A79}
 .modal-footer{display:flex;gap:8px;padding:0 1.25rem 1.25rem;flex-wrap:wrap}
-.btn-confirm{flex:1;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;border-radius:8px;border:none;background:var(--accent);color:white;cursor:pointer;transition:opacity .15s;white-space:nowrap}
+.btn-confirm{flex:1;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;padding:12px 10px;border-radius:8px;border:none;background:var(--accent);color:white;cursor:pointer;transition:opacity .15s;white-space:nowrap;min-height:44px}
 .btn-confirm:hover{opacity:.88}
-.btn-confirm.green{background:var(--accent2)}
+.btn-confirm.green{background:#69174C}
 .btn-confirm:disabled{opacity:.4;cursor:default}
-.btn-secondary{font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-soft);cursor:pointer;white-space:nowrap}
+.btn-secondary{font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 16px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-soft);cursor:pointer;white-space:nowrap;min-height:44px}
 .btn-secondary:hover{background:var(--bg)}
 .confirm-screen{display:none;padding:1.5rem 1.25rem}
 .confirm-screen.show{display:block}
 .confirm-icon{font-size:36px;text-align:center;margin-bottom:12px}
-.confirm-screen h3{font-family:'Playfair Display',serif;font-size:18px;text-align:center;margin-bottom:6px;color:var(--accent2)}
+.confirm-screen h3{font-family:'Playfair Display',serif;font-size:18px;text-align:center;margin-bottom:6px;color:#69174C}
 .confirm-screen .sub{font-size:13px;color:var(--text-soft);text-align:center;margin-bottom:1rem}
-.confirm-list{margin:0 0 1rem;font-size:13px;background:#F4F8F4;border-radius:8px;padding:10px 14px}
-.confirm-list div{padding:3px 0;border-bottom:1px solid #E8EDE8}
+.confirm-list{margin:0 0 1rem;font-size:13px;background:#F7F0F5;border-radius:8px;padding:10px 14px}
+.confirm-list div{padding:3px 0;border-bottom:1px solid #EDD8E8}
 .confirm-list div:last-child{border:none}
-.code-box{background:#FFF8F0;border:2px dashed var(--accent);border-radius:10px;padding:14px;text-align:center;margin-bottom:1rem}
-.code-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:500;margin-bottom:6px}
-.code-val{font-family:monospace;font-size:26px;font-weight:700;letter-spacing:.15em;color:var(--accent2)}
+.code-box{background:#FFF3E8;border:2px dashed #EF7A1D;border-radius:10px;padding:14px;text-align:center;margin-bottom:1rem}
+.code-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#EF7A1D;font-weight:500;margin-bottom:6px}
+.code-val{font-family:monospace;font-size:26px;font-weight:700;letter-spacing:.15em;color:#69174C}
 .code-hint{font-size:11px;color:var(--text-muted);margin-top:6px}
-.btn-close{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;border-radius:8px;border:none;background:var(--accent2);color:white;cursor:pointer}
+.btn-close{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;border-radius:8px;border:none;background:#69174C;color:white;cursor:pointer}
 .person-section{margin-bottom:1rem}
-.person-header{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);padding:4px 0;margin-bottom:6px;border-bottom:1px solid var(--border)}
+.person-header{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:#888;padding:4px 0;margin-bottom:6px;border-bottom:1px solid var(--border)}
 .my-slots-list{display:flex;flex-direction:column;gap:6px;margin-bottom:4px}
 .my-slot-row{display:flex;justify-content:space-between;align-items:center;background:#F9F8F6;border-radius:8px;padding:9px 12px;border:1px solid var(--border);font-size:13px}
 .my-slot-info{flex:1}
@@ -100,22 +101,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .my-slot-time{font-size:12px;color:var(--text-soft);margin-top:1px}
 .my-slot-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
 .my-slot-code{font-family:monospace;font-size:11px;color:var(--accent);margin-top:2px}
-.btn-unsub{font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid #FFCDD2;background:var(--full-bg);color:var(--full);cursor:pointer;transition:all .15s;white-space:nowrap;margin-left:8px}
+.btn-unsub{font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid #E8A0CE;background:#FCEAF4;color:#B6107C;cursor:pointer;transition:all .15s;white-space:nowrap;margin-left:8px}
 .btn-unsub:hover{background:var(--full);color:white}
 .divider{border:none;border-top:1px solid var(--border);margin:1rem 0}
 .section-sub{font-size:11px;font-weight:500;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
 .guide{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-top:2rem}
-.guide-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--accent2);margin-bottom:1rem}
+.guide-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:#69174C;margin-bottom:1rem}
 .guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
 .guide-block{background:var(--bg);border-radius:8px;padding:10px 12px;border:1px solid var(--border)}
-.guide-block-title{font-size:12px;font-weight:500;color:var(--accent2);margin-bottom:4px}
+.guide-block-title{font-size:12px;font-weight:500;color:#69174C;margin-bottom:4px}
 .guide-block p{font-size:12px;color:var(--text-soft);line-height:1.5}
-.guide-alert{background:var(--warn-bg);border:1px solid #FFD180;border-radius:8px;padding:10px 12px;font-size:12px;color:var(--warn);line-height:1.5;margin-bottom:8px}
-.guide-parents{background:var(--info-bg);border:1px solid #BDD3FF;border-radius:8px;padding:10px 12px;font-size:12px;color:var(--info);line-height:1.5}
+.guide-alert{background:#FFF3E0;border:1px solid #EF7A1D;border-radius:8px;padding:10px 12px;font-size:12px;color:var(--warn);line-height:1.5;margin-bottom:8px}
+.guide-parents{background:#E0F7F7;border:1px solid #80D8D7;border-radius:8px;padding:10px 12px;font-size:12px;color:#007A79;line-height:1.5}
 .notice{font-size:12px;color:var(--text-muted);text-align:center;margin-top:1.5rem;padding:10px;border-top:1px solid var(--border)}
+@keyframes bounceX{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:600px){.field-row{grid-template-columns:1fr}.hero{padding:2rem 1.25rem 1.5rem}.modal-footer{flex-direction:column}.guide-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.field-row{grid-template-columns:1fr}.hero{padding:2rem 1.25rem 1.5rem}.modal-footer{flex-direction:column}.guide-grid{grid-template-columns:1fr}.modal{max-width:100%;margin:0;border-radius:var(--radius) var(--radius) 0 0;position:fixed;bottom:0;left:0;right:0;max-height:92vh}.overlay{align-items:flex-end;padding:0}.spot{width:38px;height:38px}.stat-num{font-size:18px}.main{padding:1rem .75rem 3rem}.steps-box{padding:.75rem 1rem}.btn-action{font-size:12px;padding:6px 12px}}
 </style>
 </head>
 <body>
@@ -137,18 +139,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="steps-title">Comment s'inscrire ?</div>
     <div class="step-row"><span class="step-num">1</span><span><strong>Sélectionnez un stand</strong> en cliquant sur son nom dans la liste ci-dessous.</span></div>
     <div class="step-row"><span class="step-num">2</span><span><strong>Choisissez un créneau</strong> disponible et cliquez sur <em>"+ M'inscrire sur ce créneau"</em>.</span></div>
-    <div class="step-row"><span class="step-num">3</span><span><strong>Complétez le formulaire</strong> et confirmez. Répétez pour d'autres créneaux. <span style="color:var(--accent2);font-weight:500">Deux parents peuvent s'inscrire avec la même adresse e-mail</span> — chacun saisit son propre nom.</span></div>
+    <div class="step-row"><span class="step-num">3</span><span><strong>Complétez le formulaire</strong> et confirmez. Répétez pour d'autres créneaux.</span></div>
+    <div style="background:#E0F7F7;border:1px solid #80D8D7;border-radius:8px;padding:8px 12px;font-size:12px;color:#007A79;margin-top:4px">
+      <strong>Deux parents, une seule adresse e-mail ?</strong> Aucun problème — chaque parent s'inscrit séparément en saisissant <strong>son propre nom</strong>. Le formulaire les distingue automatiquement.
+    </div>
   </div>
 
   <div class="top-actions">
     <button class="btn-action" onclick="openMyAccount()">Mes inscriptions / Annuler</button>
   </div>
 
+  <div id="standNote" style="display:none;background:#E0F7F7;border:1px solid #80D8D7;border-radius:8px;padding:9px 14px;font-size:13px;color:#007A79;margin-bottom:1rem">
+    <strong>Durée estimée : environ 3h</strong> — le temps peut varier selon le nombre de bénévoles présents et l'efficacité de chacun. Venez selon vos disponibilités !
+  </div>
   <div class="stands-nav" id="standsNav"></div>
   <div class="panel-title" id="panelTitle"></div>
   <div class="slots-grid" id="slotsGrid"><div class="loading-bar">Chargement des créneaux...</div></div>
 
-  <div class="notice">Vos données sont utilisées uniquement pour l'organisation de la kermesse et ne sont pas visibles par les autres participants.</div>
 
   <div class="guide">
     <div class="guide-title">Mode d'emploi complet</div>
@@ -167,13 +174,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       </div>
       <div class="guide-block">
         <div class="guide-block-title">Compléter plus tard</div>
-        <p>Revenez à tout moment. Vos informations seront pré-remplies automatiquement si vous utilisez le même e-mail et nom.</p>
+        <p>Revenez à tout moment, cliquez sur <em>"Mes inscriptions / Annuler"</em>, saisissez votre e-mail, puis <em>"Retour aux stands"</em> — vos informations seront pré-remplies automatiquement dans le formulaire.</p>
       </div>
     </div>
     <div class="guide-alert"><strong>Conflit horaire :</strong> impossible de s'inscrire deux fois sur le même créneau horaire, même sur des stands différents.</div>
     <div class="guide-parents"><strong>Deux parents avec la même adresse e-mail ?</strong> Chaque parent s'inscrit avec <strong>son propre nom</strong>. Saisissez l'e-mail commun dans <em>"Mes inscriptions"</em> pour voir les créneaux des deux parents.</div>
   </div>
 </div>
+
+  <div class="notice" style="text-align:left;line-height:1.6">
+    <strong style="color:var(--text)">Informations et données personnelles — RGPD</strong><br>
+    Les données collectées (nom, prénom, téléphone, e-mail, nom et classe de l'enfant) sont utilisées <strong>uniquement</strong> pour l'organisation et la coordination des bénévoles de la kermesse 2026. Elles ne sont pas transmises à des tiers et ne sont pas visibles par les autres participants. Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression de vos données. <strong>L'ensemble des données sera supprimé à l'issue de la kermesse 2026.</strong> Pour toute demande, contactez-nous à : <a href="mailto:ogec@sainthilairedeloulay-stemarie.fr" style="color:#69174C">ogec@sainthilairedeloulay-stemarie.fr</a>
+  </div>
 
 <!-- Modal inscription -->
 <div class="overlay" id="overlayInscription">
@@ -185,9 +197,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       </div>
       <div class="modal-body">
         <div class="msg warn" id="conflictMsg"></div>
+        <div id="nameTip" style="display:none;font-size:12px;margin-top:8px;padding:9px 12px;border-radius:6px;background:#FEF3E2;border:1px solid #EF7A1D;color:#C05000;line-height:1.5"></div>
         <div class="field">
           <label>Votre nom et prénom *</label>
-          <input id="fName" placeholder="Marie Dupont" oninput="onIdentityInput()"/>
+          <input id="fName" placeholder="Marie Dupont" oninput="this.value=capitalizeWords(this.value);onIdentityInput()"/>
         </div>
         <div class="ado-check">
           <input type="checkbox" id="fIsAdo" onchange="checkConflict()"/>
@@ -195,14 +208,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         </div>
         <div id="childrenFields">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-            <div class="field" style="margin-bottom:0"><label>Nom de l'enfant 1 *</label><input class="fChild" placeholder="Léa Dupont"/></div>
-            <div class="field" style="margin-bottom:0"><label>Classe + prénom enseignant(e) *</label><input class="fClass" placeholder="CE2 — Mme Martin"/></div>
+            <div class="field" style="margin-bottom:0"><label>Nom de l'enfant 1 *</label><input class="fChild" placeholder="Léa Dupont" oninput="this.value=capitalizeWords(this.value)"/></div>
+            <div class="field" style="margin-bottom:0"><label>Classe + prénom enseignant(e) *</label><input class="fClass" placeholder="CE2 — Mme Martin" oninput="this.value=capitalizeWords(this.value)"/></div>
           </div>
         </div>
-        <button type="button" id="btnAddChild" onclick="addChildRow()" style="font-family:inherit;font-size:12px;padding:5px 12px;border-radius:6px;border:1px dashed var(--border);background:transparent;color:var(--accent2);cursor:pointer;margin-bottom:12px">+ Ajouter un autre enfant (max 4)</button>
+        <button type="button" id="btnAddChild" onclick="addChildRow()" style="font-family:inherit;font-size:12px;padding:5px 12px;border-radius:6px;border:1px dashed var(--border);background:transparent;color:#69174C;cursor:pointer;margin-bottom:12px">+ Ajouter un autre enfant (max 4)</button>
         <div class="field-row">
-          <div class="field"><label>Téléphone *</label><input id="fPhone" type="tel" placeholder="06 12 34 56 78"/></div>
-          <div class="field"><label>E-mail *</label><input id="fEmail" type="email" placeholder="famille@email.com" oninput="onIdentityInput()"/></div>
+          <div class="field"><label>Téléphone * <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#EF7A1D;font-size:10px">— pour vous joindre le jour J</span></label><input id="fPhone" type="tel" placeholder="06 12 34 56 78" oninput="this.value=formatPhone(this.value)" maxlength="14"/></div>
+          <div class="field"><label>E-mail *</label><input id="fEmail" type="email" placeholder="famille@email.com" oninput="this.value=cleanEmail(this.value);onIdentityInput()"/></div>
         </div>
         <div class="msg info" style="display:block;font-size:12px;margin-top:4px">Deux parents peuvent utiliser la même adresse e-mail — chacun s'inscrit avec <strong>son propre nom</strong>.</div>
         <div class="msg error" id="errMsg"></div>
@@ -239,7 +252,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div class="msg info" style="display:block;margin-bottom:14px">Saisissez votre adresse e-mail pour voir les inscriptions de <strong>toute la famille</strong>.</div>
         <div class="field">
           <label>Adresse e-mail de la famille</label>
-          <input id="accountEmail" type="email" placeholder="famille@email.com"/>
+          <input id="accountEmail" type="email" placeholder="famille@email.com" oninput="this.value=cleanEmail(this.value)"/>
         </div>
         <div class="msg error" id="accountErr"></div>
       </div>
@@ -263,6 +276,7 @@ var SUPABASE_URL = "https://rwieiemshitqcvzjzvgy.supabase.co";
 var SUPABASE_KEY = "sb_publishable_m917FPsrdzKkvYneAVg2uw_oTXKau9I";
 
 var STANDS = [
+  {id:"install",    name:"Installation / D\u00e9sinstallation",    slots:["Vendredi soir (\u00e0 partir de 17h15)","Samedi matin (\u00e0 partir de 9h)","Dimanche matin (\u00e0 partir de 9h)"], max:999},
   {id:"defile",    name:"D\u00e9fil\u00e9",                          slots:["14h\u201315h"],                                                    max:15},
   {id:"bar",       name:"Bar",                                        slots:["16h\u201317h","17h\u201318h","18h\u201319h","19h\u201320h"],        max:4},
   {id:"laser",     name:"Tir laser biathlon",                         slots:["16h\u201317h","17h\u201318h","18h\u201319h"],                       max:4},
@@ -390,15 +404,24 @@ function renderNav() {
   var html = "";
   for (var i = 0; i < STANDS.length; i++) {
     var s = STANDS[i];
+    var smax = s.max || 4;
+    var allFull = s.slots.length > 0;
     var hasFull = false;
     for (var j = 0; j < s.slots.length; j++) {
-      if (getCount(s.id + ":" + s.slots[j]) >= s.max) { hasFull = true; break; }
+      var cnt = getCount(s.id + ":" + s.slots[j]);
+      if (cnt < smax) allFull = false;
+      if (cnt >= smax) hasFull = true;
     }
+    if (allFull && s.id !== currentStand) continue;
     var cls = "stand-chip" + (s.id === currentStand ? " active" : "") + (hasFull ? " has-full" : "");
     html += '<button class="' + cls + '" onclick="selectStand(\'' + s.id + '\')">' + esc(s.name) + '</button>';
   }
+  if (!html) html = '<span style="font-size:13px;color:#888;font-style:italic">Tous les créneaux sont complets !</span>';
   document.getElementById("standsNav").innerHTML = html;
+  setTimeout(checkNavScroll, 100);
 }
+
+function checkNavScroll() { }
 
 function selectStand(id) { currentStand = id; renderNav(); renderSlots(); }
 
@@ -408,33 +431,53 @@ function renderSlots() {
   if (!stand) return;
   var smax = stand.max || 4;
   document.getElementById("panelTitle").textContent = stand.name;
+  // Note durée pour installation/désinstallation
+  var noteEl = document.getElementById("standNote");
+  if (stand.id === "install") {
+    noteEl.style.display = "block";
+  } else {
+    noteEl.style.display = "none";
+  }
   var html = "";
+  var hasVisible = false;
   for (var si = 0; si < stand.slots.length; si++) {
     var sl = stand.slots[si];
     var key = stand.id + ":" + sl;
     var count = getCount(key);
     var full = count >= smax;
+    var inscClosed = isInscriptionClosed();
+    if (full && !inscClosed) continue;
+    hasVisible = true;
     var adoCount = getAdoCount(key);
     var adoFull = adoCount >= MAX_ADO;
-    var spots = "";
-    var spotStyle = smax > 8 ? "width:26px;height:26px;font-size:13px" : "";
-    for (var pi = 0; pi < smax; pi++) {
-      spots += '<div class="spot ' + (pi < count ? "taken" : "free") + '" style="' + spotStyle + '">' + (pi < count ? "\uD83D\uDC64" : "\u25CB") + '</div>';
+    var unlimited = (smax >= 999);
+    var spotsHtml = "";
+    if (unlimited) {
+      for (var pi = 0; pi < count; pi++) { spotsHtml += '<div class="spot taken">\uD83D\uDC64</div>'; }
+    } else {
+      var spotStyle = smax > 8 ? "width:26px;height:26px;font-size:13px" : "";
+      for (var pi = 0; pi < smax; pi++) {
+        spotsHtml += '<div class="spot ' + (pi < count ? "taken" : "free") + '" style="' + spotStyle + '">' + (pi < count ? "\uD83D\uDC64" : "\u25CB") + '</div>';
+      }
     }
     var adoBadge = adoFull
       ? '<span class="badge-ado">Ados complets (3/3)</span>'
       : (adoCount > 0 ? '<span style="font-size:10px;background:#F9F8F6;color:var(--text-muted);padding:2px 7px;border-radius:10px">' + adoCount + '/3 ado' + (adoCount > 1 ? 's' : '') + '</span>' : '');
-    var inscClosed = isInscriptionClosed();
+    var badgeHtml = unlimited
+      ? '<span class="badge badge-ok">' + count + ' inscrit' + (count > 1 ? 's' : '') + '</span>'
+      : '<span class="badge ' + (full ? "badge-full" : "badge-ok") + '">' + count + '/' + smax + ' \u2014 ' + (full ? "complet" : (smax - count) + " place" + ((smax - count) > 1 ? "s" : "") + " dispo") + '</span>';
     html += '<div class="slot-card">'
       + '<div class="slot-head">'
       + '<span class="slot-time">' + sl + (adoBadge ? ' ' + adoBadge : '') + '</span>'
-      + '<span class="badge ' + (full ? "badge-full" : "badge-ok") + '">' + count + '/' + smax
-      + ' \u2014 ' + (full ? "complet" : (smax - count) + " place" + ((smax - count) > 1 ? "s" : "") + " dispo") + '</span>'
+      + badgeHtml
       + '</div>'
-      + '<div class="slot-body"><div class="spots-row">' + spots + '</div>'
+      + '<div class="slot-body"><div class="spots-row">' + spotsHtml + '</div>'
       + '<button class="btn-add"' + (full || inscClosed ? ' disabled' : '') + ' onclick="openInscription(\'' + key + '\',\'' + esc(stand.name) + '\',\'' + sl + '\')">'
       + (inscClosed ? 'Inscriptions closes' : full ? 'Cr\u00e9neau complet' : '+ M\'inscrire sur ce cr\u00e9neau') + '</button>'
       + '</div></div>';
+  }
+  if (!hasVisible && !isInscriptionClosed()) {
+    html = '<div style="text-align:center;padding:2rem;color:#888;font-size:13px;font-style:italic">Tous les cr\u00e9neaux de ce stand sont complets.</div>';
   }
   document.getElementById("slotsGrid").innerHTML = html;
   renderStats();
@@ -472,8 +515,8 @@ function addChildRow() {
   var div = document.createElement("div");
   div.setAttribute("data-child", "1");
   div.style.cssText = "display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;position:relative";
-  div.innerHTML = '<div class="field" style="margin-bottom:0"><label>Nom de l\'enfant ' + (idx + 1) + '</label><input class="fChild" placeholder="Paul Dupont"/></div>'
-    + '<div class="field" style="margin-bottom:0"><label>Classe + enseignant(e)</label><input class="fClass" placeholder="CP \u2014 M. Bernard"/></div>'
+  div.innerHTML = '<div class="field" style="margin-bottom:0"><label>Nom de l\'enfant ' + (idx + 1) + '</label><input class="fChild" placeholder="Paul Dupont" oninput="this.value=capitalizeWords(this.value)"/></div>'
+    + '<div class="field" style="margin-bottom:0"><label>Classe + enseignant(e)</label><input class="fClass" placeholder="CP \u2014 M. Bernard" oninput="this.value=capitalizeWords(this.value)"/></div>'
     + '<button type="button" onclick="removeChildRow(this)" style="position:absolute;top:0;right:-22px;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:2px">\u2715</button>';
   container.appendChild(div);
 }
@@ -518,8 +561,97 @@ function resetChildrenFields(children) {
 }
 
 /* ---- Identité ---- */
+function normalizeStr(s) {
+  return String(s||"").toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/\s+/g," ").trim();
+}
+
+function capitalizeWords(s) {
+  return String(s||"").replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+}
+
+function formatPhone(s) {
+  var digits = String(s||"").replace(/\D/g,"");
+  var parts = [];
+  for (var i = 0; i < digits.length && i < 10; i += 2) {
+    parts.push(digits.substring(i, i+2));
+  }
+  return parts.join(" ");
+}
+
+function cleanEmail(s) {
+  return String(s||"")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/\s/g,"");
+}
 function ikey(email, name) {
-  return email.trim().toLowerCase() + "||" + name.trim().toLowerCase().replace(/\s+/g, " ");
+  var words = normalizeStr(name).split(" ").filter(function(w){ return w.length > 0; });
+  words.sort();
+  return normalizeStr(email) + "||" + words.join(" ");
+}
+
+function levenshtein(a, b) {
+  var m = a.length, n = b.length;
+  var dp = [];
+  for (var i = 0; i <= m; i++) {
+    dp[i] = [i];
+    for (var j = 1; j <= n; j++) {
+      if (i === 0) { dp[i][j] = j; continue; }
+      dp[i][j] = a[i-1] === b[j-1]
+        ? dp[i-1][j-1]
+        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+
+function findSimilarName(email, name) {
+  if (!email || email.indexOf("@") < 0 || !name || name.trim().length < 3) return null;
+  var normNew = normalizeStr(name);
+  var em = normalizeStr(email);
+  var seen = {};
+  var best = null;
+  var bestDist = 999;
+  for (var i = 0; i < STANDS.length; i++) {
+    var s = STANDS[i];
+    for (var j = 0; j < s.slots.length; j++) {
+      // On ne peut pas interroger Supabase ici sans async
+      // On utilise un cache local des noms déjà vus ce chargement
+    }
+  }
+  // Chercher dans le cache de noms connus (rempli au chargement)
+  var knownNames = window._knownNames || {};
+  var emailNames = knownNames[em] || [];
+  for (var k = 0; k < emailNames.length; k++) {
+    var existNorm = normalizeStr(emailNames[k]);
+    if (existNorm === normNew) return null; // exact match, pas de suggestion
+    var dist = levenshtein(existNorm, normNew);
+    var threshold = Math.max(2, Math.floor(normNew.length * 0.2));
+    if (dist > 0 && dist <= threshold && dist < bestDist) {
+      bestDist = dist;
+      best = emailNames[k];
+    }
+  }
+  return best;
+}
+
+function loadKnownNames() {
+  if (!window._knownNamesEmail) return;
+  var em = normalizeStr(window._knownNamesEmail);
+  sbGet("inscriptions?email=eq." + encodeURIComponent(window._knownNamesEmail.toLowerCase()) + "&select=name")
+    .then(function(rows) {
+      if (!Array.isArray(rows)) return;
+      var names = [];
+      var seen = {};
+      for (var i = 0; i < rows.length; i++) {
+        var n = rows[i].name;
+        if (!seen[n]) { seen[n] = true; names.push(n); }
+      }
+      if (!window._knownNames) window._knownNames = {};
+      window._knownNames[em] = names;
+    }).catch(function(){});
 }
 
 function getSlotsByIdentity(email, name) {
@@ -566,11 +698,29 @@ function checkConflict() {
         }
       }
     });
+  // Détection typo sur le nom (async, ne bloque pas)
+  if (name.length > 2) {
+    var similar = findSimilarName(email, name);
+    var tipEl = document.getElementById("nameTip");
+    if (tipEl) {
+      if (similar && normalizeStr(similar) !== normalizeStr(name)) {
+        tipEl.innerHTML = 'Un bénévole nommé <strong>' + esc(similar) + '</strong> est déjà inscrit avec cet e-mail. Est-ce vous ? Si oui, utilisez exactement ce nom pour regrouper vos inscriptions.';
+        tipEl.style.display = "block";
+      } else {
+        tipEl.style.display = "none";
+      }
+    }
+  }
 }
 
 function onIdentityInput() {
   var email = document.getElementById("fEmail").value.trim();
   var name = document.getElementById("fName").value.trim();
+  // Charger les noms connus pour cet email (pour détection de typos)
+  if (email.indexOf("@") >= 0 && email !== window._knownNamesEmail) {
+    window._knownNamesEmail = email.toLowerCase();
+    loadKnownNames();
+  }
   if (email.indexOf("@") >= 0 && name.length > 2) {
     sbGet("inscriptions?email=eq." + encodeURIComponent(email.toLowerCase()) + "&name=eq." + encodeURIComponent(name) + "&limit=1&select=phone,children")
       .then(function(rows) {
@@ -601,6 +751,7 @@ function openInscription(key, standName, slot) {
   document.getElementById("modalSub").textContent = "Cr\u00e9neau " + slot;
   document.getElementById("errMsg").style.display = "none";
   document.getElementById("conflictMsg").style.display = "none";
+  var nt = document.getElementById("nameTip"); if(nt) nt.style.display = "none";
   document.getElementById("btnSubmit").disabled = false;
   document.getElementById("fIsAdo").checked = false;
   document.getElementById("formScreen").style.display = "block";
@@ -697,7 +848,7 @@ function submitForm() {
           }
           document.getElementById("confirmList").innerHTML =
             "<div><strong>Stand :</strong> " + esc(sName) + " \u2014 " + slot + "</div>"
-            + "<div><strong>B\u00e9n\u00e9vole :</strong> " + esc(name) + (isAdo ? ' <span style="background:var(--warn-bg);color:var(--warn);font-size:11px;padding:2px 8px;border-radius:10px">Ado</span>' : '') + "</div>"
+            + "<div><strong>B\u00e9n\u00e9vole :</strong> " + esc(name) + (isAdo ? ' <span style="background:#FEE8D0;color:#C05000;font-size:11px;padding:2px 8px;border-radius:10px">Ado</span>' : '') + "</div>"
             + childLines
             + "<div><strong>T\u00e9l\u00e9phone :</strong> " + esc(phone) + "</div>"
             + "<div><strong>E-mail :</strong> " + esc(email) + "</div>";
